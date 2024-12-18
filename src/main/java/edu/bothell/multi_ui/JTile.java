@@ -1,6 +1,5 @@
 package edu.bothell.multi_ui;
 
-import java.awt.ActiveEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -25,13 +24,14 @@ public class JTile extends JButton implements ActionListener, Placeable {
     }
 
     private void init(){
+        this.addActionListener(this);
         b.add(this);
     }
 
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        c.update( c.getActive().getChar(), pos[1], pos[0] );
+        c.update( pos );
     }
 
     @Override

@@ -1,6 +1,7 @@
 package edu.bothell.multi_ui;
 
 public class Game {
+    private final int MAX_PLAYERS = 3;
     private Player[] p;
     private Control  c;
     private State    s;
@@ -15,9 +16,18 @@ public class Game {
         this.s = new State();
     }
 
-    public void play(){
-        System.out.println(active + ": start turn " + turn );
-        this.active = p[turn++ % p.length];
+    public boolean isValid(int[] pos){
+        System.out.println("isVAlid?"+s.getIt(pos)+"|");
+        return s.getIt(pos) == ' ';
+    }
+
+    public boolean play(int[] pos){
+        System.out.println(isValid(pos));
+        if(!isValid(pos)) return false;
+        this.active = p[turn % p.length];
+        this.s.setIt(active.getChar(), pos[0], pos[1]);
+        turn++;
+        return true;
     }
 
     public Player getActive() {
@@ -26,6 +36,10 @@ public class Game {
 
     public State getState() {
         return this.s;
+    }
+
+    public int getMaxPlayers() {
+        return MAX_PLAYERS;
     }
 
 
