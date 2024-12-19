@@ -10,9 +10,9 @@ public final class Swing extends JFrame implements UI {
     private Control c;
 
     public Swing(){
-        this.c = new Control();
         init();
     }
+
     public Swing(Control c){
         this.c = c;
         this.build();
@@ -23,6 +23,8 @@ public final class Swing extends JFrame implements UI {
         super.setSize(new Dimension(200, 600));
         super.setDefaultCloseOperation(EXIT_ON_CLOSE);
         super.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
+
+        build();
 
         super.setVisible(true);
     }

@@ -31,7 +31,7 @@ public class JTile extends JButton implements ActionListener, Placeable {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        c.update( pos );
+        c.update( pos,"x" );
     }
 
     @Override
