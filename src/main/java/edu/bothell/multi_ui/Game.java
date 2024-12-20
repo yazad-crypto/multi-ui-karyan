@@ -4,53 +4,49 @@ import java.util.ArrayList;
 
 
 public class Game {
-    private final int            MAX_PLAYERS = 3;
-    private ArrayList<Player>    p;
-    private Control              c;
-    private State                s;
-    private int                  turn;
-    private Player               active;
+    private final int                  MAX_PLAYERS = 3;
+    private final ArrayList<Player>    p;
+    private final State                s;
+    private int                        turn;
+    private Player                     active;
 
     public Game(Control c){
-        this.c = c;
         this.turn = 0;
         this.s = new State();
-        this.p = new ArrayList<Player>();
+        this.p = new ArrayList<>();
+        System.out.println(c.getUI());
     }
     
-    public void addPlayer(Player p){
+    public Player addPlayer(Player p){
         this.p.add(p);
         if(this.active == null) active = p;
+
+        return p;
     }
 
     public Player addPlayer(char c, String sId){
         Player p = new Player(c);
         p.setSId(sId);
-        this.p.add( p );
-        if(this.active == null) active = p;
-
-        return p;
+        return addPlayer(p);
     }
 
     public Player addPlayer(){
         Player p = new Player();
-        this.p.add( p );
-        return p;
+        return addPlayer(p);
     }
 
     public boolean isValid(int[] pos, String sId){
-        System.out.println("isVAlid?"+s.getIt(pos)+"|");
+        System.out.println("isVAlid?"+s.getIt(pos)+"|" + sId+"|" + active.getSId()+"|");
         return s.getIt(pos) == ' ' && active.getSId().equals(sId);
     }
 
-    public boolean play(int[] pos, String sId){
-        if(!isValid(pos, sId)) return false;
+    public char play(int[] pos, String sId){
+        if(!isValid(pos, sId)) return ' ';
         turn++;
         this.s.setIt(active.getChar(), pos[0], pos[1]);
         this.active = p.get( turn % p.size() );
-        
 
-        return true;
+        return active.getChar();
     }
 
     public Player getActive() {

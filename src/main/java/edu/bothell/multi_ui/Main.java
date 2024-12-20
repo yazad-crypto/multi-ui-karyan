@@ -3,8 +3,8 @@ package edu.bothell.multi_ui;
 public class Main {
     public static void main(String[] args){
 
-
-        Control c = new Control(new Swing());
+        Player p  = new Player('x');
+        Control c = new Control(p);
 
         System.out.println("MAIN RAN WITHOUT ERRORS!");
     }

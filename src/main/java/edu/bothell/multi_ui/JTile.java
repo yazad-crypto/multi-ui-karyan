@@ -8,11 +8,11 @@ import javax.swing.JFrame;
 
 public class JTile extends JButton implements ActionListener, Placeable {
     
-    private JFrame  b;
-    private Control c;
+    private final JFrame  b;
+    private final Control c;
     
-    private int[]   pos;
-    private char    it;
+    private final int[]   pos;
+    private char          it;
 
 
     public JTile(Swing b, int[] pos){
@@ -31,7 +31,8 @@ public class JTile extends JButton implements ActionListener, Placeable {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        c.update( pos,"x" );
+        char bt = c.update( pos,"" );
+        if(bt != ' ') super.setText("" + bt);
     }
 
     @Override
