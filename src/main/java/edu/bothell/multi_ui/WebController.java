@@ -27,25 +27,25 @@ public class WebController {
     @GetMapping("/game")
     public String getGame( HttpSession session, Model m ) {
         String sessionId = session.getId();
-        String role = "";
+        int i;
         
         synchronized(sessions){
             if (!sessions.contains(sessionId) && sessions.size() < c.getMaxPlayers() && c.getTurn() < 2) {
-                c.addPlayer( (char)(sessions.size() + '0'), sessionId );
+                c.addPlayer( (char)(sessions.size() + '1'), sessionId );
                 sessions.add(sessionId);
             }
         }
 
         synchronized(sessions){
-            int i = sessions.indexOf(sessionId);
-            role = "player:"+ i;
+            i = sessions.indexOf(sessionId) + 1;
         }
 
         char[][] s = c.getState().getIt();
         m.addAttribute("s", s);
+        m.addAttribute("turn", c.getTurn());
         m.addAttribute("pc", c.getPlayerCount());
         m.addAttribute("sessionId", sessionId);
-        m.addAttribute("role", role);
+        m.addAttribute("role", i);
 
         return "game";
     }
