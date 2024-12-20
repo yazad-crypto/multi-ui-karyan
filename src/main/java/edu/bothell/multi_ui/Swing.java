@@ -15,7 +15,6 @@ public final class Swing extends JFrame implements UI {
 
     public Swing(Control c){
         this.c = c;
-        this.build();
         init();
     }
     

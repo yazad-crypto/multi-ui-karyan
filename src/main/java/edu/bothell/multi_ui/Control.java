@@ -11,18 +11,15 @@ public class Control {
      
     public Control(){
         this.ui = null;
-        System.out.println("CONTROL ACTIVE");
-    }
-    public Control(UI ui){
-        this.ui = ui;
-        this.g.addPlayer();
+        System.out.println("CONTROL ACTIVE: for web");
     }
 
     public Control(Player p){
         this.ui = new Swing(this);
-        p.setSId("null");
-        
+        this.g.addPlayer(p);
+        System.out.println("CONTROL ACTIVE: for SWING");
     }
+
 
     public void launch(){
     
@@ -32,7 +29,7 @@ public class Control {
         return this.g.getState();
     }
 
-    public boolean update(int[] pos, String sId) {
+    public char update(int[] pos, String sId) {
         System.out.println("MAKE UPDATE! " + pos[0] + "|" + pos[1]);
         return g.play(pos, sId);
     }
@@ -56,7 +53,9 @@ public class Control {
     public int getMaxPlayers() {
         return g.getMaxPlayers();
     }
-
+    public UI getUI(){
+        return this.ui;
+    }
     public int getTurn(){
         return g.getTurn();
     }
