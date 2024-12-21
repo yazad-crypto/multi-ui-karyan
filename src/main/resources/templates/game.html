@@ -68,24 +68,7 @@
                 ></button>
             </div>
             </div>
-        </div>
-
-        <div class="board">
-            <div>
-            
-                <div class="row" th:each = "row, y : ${s}">
-                <button th:each = "cell, x : ${row}"
-                    th:class="${'c'+ cell}"
-                    th:text="${cell}"
-                    th:value="${x.index + ',' + y.index}" 
-                    th:disabled="${cell + '' != ' '  }"
-                    name="pos"
-                    type="submit"
-                ></button>
-                </div>
-            </div>
-        </div>
-    
+        </div>    
     </form>
 </body>
 </html>
