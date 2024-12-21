@@ -27,6 +27,7 @@ public class WebController {
     @GetMapping("/game")
     public String getGame( HttpSession session, Model m ) {
         String sessionId = session.getId();
+        int rnd = (int)Math.ceil(Math.random() * 6);
         int i;
         
         synchronized(sessions){
@@ -41,6 +42,7 @@ public class WebController {
         }
 
         char[][] s = c.getState().getIt();
+        m.addAttribute("die", rnd);
         m.addAttribute("s", s);
         m.addAttribute("turn", c.getTurn());
         m.addAttribute("pc", c.getPlayerCount());
@@ -51,14 +53,21 @@ public class WebController {
     }
 
     @PostMapping("/update")
-    public String updateBoard(@RequestParam("pos") String pos, HttpSession s) {
+    public String updateBoard(
+        @RequestParam(value="pos", required = false) String pos, 
+        @RequestParam(value="die", required = false) Integer die, 
+        HttpSession s) {
+        System.out.println(die + " UPDATE!!!!!!!!");
         if(c.getPlayerCount() <2 ) return "redirect:/game";
+        if(die != null){
 
-        String p[] = pos.split(",");
-        int x = Integer.parseInt(p[0]);
-        int y = Integer.parseInt(p[1]);
-        this.c.update( new int[]{x,y}, s.getId() );
-
+        }
+        if(pos != null){
+            String p[] = pos.split(",");
+            int x = Integer.parseInt(p[0]);
+            int y = Integer.parseInt(p[1]);
+            this.c.update( new int[]{x,y}, s.getId() );
+        }
         return "redirect:/game";
     }
     

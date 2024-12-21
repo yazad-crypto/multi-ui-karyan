@@ -4,6 +4,14 @@
 
     <meta http-equiv="refresh" content="5">
     <style>
+        body{text-align: center; margin:0; padding:0; position: relative;}
+        .board > *{
+            display: inline-block;
+            margin:auto;
+            transform: perspective(600px) rotateX(70deg);
+        }
+        .board{height:6rem; position: relative; z-index: 2;}
+        div{position: relative;}
         button{
             width:2rem; height:1.33rem; margin:.42rem .2rem ; position: relative; vertical-align: middle; background-color: lightblue; border:none;
         }
@@ -18,7 +26,7 @@
         body .c2{background-color:rgba(0,255,200,.75) !important}
         body button.c2:before{border-top-color:rgba(0,255,200,.75) !important;} 
         body button.c2:after{border-bottom-color:rgba(0,255,200,.75) !important;}         
-        body .c3{background-color:rgba(150,100,250,.75)}
+        body .c3{background-color:rgba(150,100,250,.75) !important}
         body button.c3:before{border-top-color:rgba(150,100,250,.75) !important;} 
         body button.c3:after{border-bottom-color:rgba(150,100,250,.75) !important;}         
         body.c1 button:hover{background-color:rgba(0,150,255,.5)}
@@ -38,17 +46,46 @@
     <p th:if="${pc < 2}"><span>waiting for players...</span></p>
     <p th:if="${pc > 1}">player <span th:class="${'c'+ ((turn % pc) + 1)}" th:text="${(turn % pc) + 1}"></span>'s turn</p>
     <form method="post" th:action="@{/update}">
-        
-        <div class="row" th:each = "row, y : ${s}">
-            <button th:each = "cell, x : ${row}"
-                th:class="${'c'+ cell}"
-                th:text="${cell}"
-                th:value="${x.index + ',' + y.index}" 
-                th:disabled="${cell + '' != ' '  }"
-                name="pos"
+        <div class="dice">
+            <button class="die"
+                name="die"
+                th:value="${die}"
+                th:text="${die}"
                 type="submit"
-            ></button>
+                >0</button>
         </div>
+        <div class="board">
+            <div>
+            
+            <div class="row" th:each = "row, y : ${s}">
+                <button th:each = "cell, x : ${row}"
+                    th:class="${'c'+ cell}"
+                    th:text="${cell}"
+                    th:value="${x.index + ',' + y.index}" 
+                    th:disabled="${cell + '' != ' '  }"
+                    name="pos"
+                    type="submit"
+                ></button>
+            </div>
+            </div>
+        </div>
+
+        <div class="board">
+            <div>
+            
+                <div class="row" th:each = "row, y : ${s}">
+                <button th:each = "cell, x : ${row}"
+                    th:class="${'c'+ cell}"
+                    th:text="${cell}"
+                    th:value="${x.index + ',' + y.index}" 
+                    th:disabled="${cell + '' != ' '  }"
+                    name="pos"
+                    type="submit"
+                ></button>
+                </div>
+            </div>
+        </div>
+    
     </form>
 </body>
 </html>
