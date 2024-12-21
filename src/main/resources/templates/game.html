@@ -5,31 +5,31 @@
     <meta http-equiv="refresh" content="5">
     <style>
         button{
-            width:1.33rem; height:2rem; margin:.2rem .42rem; position: relative; vertical-align: middle; background-color: lightblue; border:none;
+            width:2rem; height:1.33rem; margin:.42rem .2rem ; position: relative; vertical-align: middle; background-color: lightblue; border:none;
         }
-        button:nth-child(odd){ top:1.1rem;  }
+        .row:nth-child(even){ left:1.1rem; position: relative;  }
         button::before,
-        button::after{ border:1rem solid transparent; content:""; border-width: 1rem .5rem; display: block; position:absolute; top:0 }
-        button::before{border-left-color: lightblue; left:100%}
-        button::after{border-right-color: lightblue; right:100%}
+        button::after{ border:1rem solid transparent; content:""; border-width:.5rem 1rem .5rem; display: block; position:absolute; left:0 }
+        button::before{border-top-color: lightblue; top:100%}
+        button::after{border-bottom-color: lightblue; bottom:100%}
         body .c1{background-color:rgba(0,150,255,.75) !important}
-        body button.c1:before{border-left-color:rgba(0,150,255,.75) !important;} 
-        body button.c1:after{border-right-color:rgba(0,150,255,.75) !important;} 
+        body button.c1:before{border-top-color:rgba(0,150,255,.75) !important;} 
+        body button.c1:after{border-bottom-color:rgba(0,150,255,.75) !important;} 
         body .c2{background-color:rgba(0,255,200,.75) !important}
-        body button.c2:before{border-left-color:rgba(0,255,200,.75) !important;} 
-        body button.c2:after{border-right-color:rgba(0,255,200,.75) !important;}         
+        body button.c2:before{border-top-color:rgba(0,255,200,.75) !important;} 
+        body button.c2:after{border-bottom-color:rgba(0,255,200,.75) !important;}         
         body .c3{background-color:rgba(150,100,250,.75)}
-        body button.c3:before{border-left-color:rgba(150,100,250,.75) !important;} 
-        body button.c3:after{border-right-color:rgba(150,100,250,.75) !important;}         
+        body button.c3:before{border-top-color:rgba(150,100,250,.75) !important;} 
+        body button.c3:after{border-bottom-color:rgba(150,100,250,.75) !important;}         
         body.c1 button:hover{background-color:rgba(0,150,255,.5)}
-        body.c1 button:hover:before{border-left-color:rgba(0,150,255,.5) ;} 
-        body.c1 button:hover:after{border-right-color:rgba(0,150,255,.5) ;} 
+        body.c1 button:hover:before{border-top-color:rgba(0,150,255,.5) ;} 
+        body.c1 button:hover:after{border-bottom-color:rgba(0,150,255,.5) ;} 
         body.c2 button:hover{background-color:rgba(0,255,200,.5)}
-        body.c2 button:hover:before{border-left-color:rgba(0,255,200,.5)} 
-        body.c2 button:hover:after{border-right-color:rgba(0,255,200,.5)} 
+        body.c2 button:hover:before{border-top-color:rgba(0,255,200,.5)} 
+        body.c2 button:hover:after{border-bottom-color:rgba(0,255,200,.5)} 
         body.c3 button:hover{background-color:rgba(150,100,250,.5)}
-        body.c3 button:hover:before{border-left-color:rgba(150,100,250,.5)} 
-        body.c3 button:hover:after{border-right-color:rgba(150,100,250,.5);} 
+        body.c3 button:hover:before{border-top-color:rgba(150,100,250,.5)} 
+        body.c3 button:hover:after{border-bottom-color:rgba(150,100,250,.5);} 
     </style>
 
 </head>
@@ -39,7 +39,7 @@
     <p th:if="${pc > 1}">player <span th:class="${'c'+ ((turn % pc) + 1)}" th:text="${(turn % pc) + 1}"></span>'s turn</p>
     <form method="post" th:action="@{/update}">
         
-        <div th:each = "row, y : ${s}">
+        <div class="row" th:each = "row, y : ${s}">
             <button th:each = "cell, x : ${row}"
                 th:class="${'c'+ cell}"
                 th:text="${cell}"
