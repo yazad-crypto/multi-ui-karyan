@@ -30,7 +30,6 @@ public class Control {
     }
 
     public char update(int[] pos, String sId) {
-        System.out.println("MAKE UPDATE! " + pos[0] + "|" + pos[1]);
         return g.play(pos, sId);
     }
 
@@ -42,10 +41,6 @@ public class Control {
         return g.addPlayer(c, sId);
     }
 
-    public Player addPlayer(){
-        return g.addPlayer();
-    } 
-
     public int getPlayerCount(){
         return g.getPlayerCount();
     }
@@ -53,9 +48,7 @@ public class Control {
     public int getMaxPlayers() {
         return g.getMaxPlayers();
     }
-    public UI getUI(){
-        return this.ui;
-    }
+    
     public int getTurn(){
         return g.getTurn();
     }

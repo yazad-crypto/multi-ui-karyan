@@ -14,7 +14,6 @@ public class Game {
         this.turn = 0;
         this.s = new State();
         this.p = new ArrayList<>();
-        System.out.println(c.getUI());
     }
     
     public Player addPlayer(Player p){
@@ -27,11 +26,6 @@ public class Game {
     public Player addPlayer(char c, String sId){
         Player p = new Player(c);
         p.setSId(sId);
-        return addPlayer(p);
-    }
-
-    public Player addPlayer(){
-        Player p = new Player();
         return addPlayer(p);
     }
 
