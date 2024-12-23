@@ -1,6 +1,9 @@
-package edu.bothell.multi_ui;
+package edu.bothell.multi_ui.core;
 
 import org.springframework.stereotype.Service;
+
+import edu.bothell.multi_ui.ui.UI;
+import edu.bothell.multi_ui.ui.swing.Swing;
 
 @Service
 public class Control {
@@ -39,6 +42,10 @@ public class Control {
 
     public Player addPlayer(char c, String sId){
         return g.addPlayer(c, sId);
+    }
+
+    public char[] getPlayersChar(){
+        return g.getPlayersChar();
     }
 
     public int getPlayerCount(){

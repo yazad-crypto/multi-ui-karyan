@@ -1,9 +1,12 @@
-package edu.bothell.multi_ui;
+package edu.bothell.multi_ui.core;
 
 import java.util.Arrays;
 
 public class State {
     public final char[][]   S = new char[][]{
+        {' ',' ',' ',' ',' ',' '},
+        {' ',' ',' ',' ',' ',' '},
+        {' ',' ',' ',' ',' ',' '},
         {' ',' ',' ',' ',' ',' '},
         {' ',' ',' ',' ',' ',' '},
         {' ',' ',' ',' ',' ',' '},

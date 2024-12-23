@@ -1,6 +1,6 @@
-package edu.bothell.multi_ui;
+package edu.bothell.multi_ui.ui.swing;
 
-public interface Placeable {
+public interface Locatable {
     public int[]   getPos();
     public char    getIt();
     public void    setIt(char x);

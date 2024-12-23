@@ -1,4 +1,4 @@
-package edu.bothell.multi_ui;
+package edu.bothell.multi_ui.ui;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,17 +9,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import edu.bothell.multi_ui.core.Control;
 import jakarta.servlet.http.HttpSession;
 
 
 @Controller
-public class WebController {
+public class PostControl {
 
     
     private final Control      c;
     private final List<String> sessions;
 
-    public WebController(Control c) {
+    public PostControl(Control c) {
         this.c = c;
         this.sessions = new ArrayList<>();
     }
@@ -42,6 +43,7 @@ public class WebController {
         }
 
         char[][] s = c.getState().getIt();
+        m.addAttribute("mode", "socket");
         m.addAttribute("die", rnd);
         m.addAttribute("s", s);
         m.addAttribute("turn", c.getTurn());

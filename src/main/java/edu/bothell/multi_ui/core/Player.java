@@ -1,4 +1,4 @@
-package edu.bothell.multi_ui;
+package edu.bothell.multi_ui.core;
 
 public class Player {
 

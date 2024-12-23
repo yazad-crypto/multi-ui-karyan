@@ -2,18 +2,25 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 
-    <meta http-equiv="refresh" content="5">
+    <meta  th:if="${mode != 'socket'}" http-equiv="refresh" content="5">
     <style>
         body{text-align: center; margin:0; padding:0; position: relative;}
         .board > *{
             display: inline-block;
-            margin:auto;
-            transform: perspective(600px) rotateX(70deg);
+            margin: auto;
+            transform: perspective(30rem) rotateX(60deg) translateZ(5rem) translateX(-.5rem);
+            perspective: 30rem; 
         }
         .board{height:6rem; position: relative; z-index: 2;}
         div{position: relative;}
         button{
             width:2rem; height:1.33rem; margin:.42rem .2rem ; position: relative; vertical-align: middle; background-color: lightblue; border:none;
+        }
+        .board button i {
+            font-style: normal;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-weight: 900;
+            transform: scaleY(1.5);
         }
         .row:nth-child(even){ left:1.1rem; position: relative;  }
         button::before,
@@ -44,7 +51,7 @@
 <body th:class="${'c'+role}">
     <p>You are player <b th:class="${'c'+role}" th:text="${role}"></b></p>
     <p th:if="${pc < 2}"><span>waiting for players...</span></p>
-    <p th:if="${pc > 1}">player <span th:class="${'c'+ ((turn % pc) + 1)}" th:text="${(turn % pc) + 1}"></span>'s turn</p>
+    <p th:if="${pc > 1}">player <span id="p" th:class="${'c'+ ((turn % pc) + 1)}" th:text="${(turn % pc) + 1}"></span>'s turn</p>
     <form method="post" th:action="@{/update}">
         <div class="dice">
             <button class="die"
@@ -55,20 +62,22 @@
                 >0</button>
         </div>
         <div class="board">
-            <div>
+            <div id="board">
             
             <div class="row" th:each = "row, y : ${s}">
                 <button th:each = "cell, x : ${row}"
                     th:class="${'c'+ cell}"
-                    th:text="${cell}"
                     th:value="${x.index + ',' + y.index}" 
                     th:disabled="${cell + '' != ' '  }"
                     name="pos"
                     type="submit"
-                ></button>
+                >
+                <i>[[${cell}]]</i>
+            </button>
             </div>
             </div>
         </div>    
     </form>
+    <script th:if="${mode == 'socket'}" src="/js/sockets.js"></script>
 </body>
 </html>

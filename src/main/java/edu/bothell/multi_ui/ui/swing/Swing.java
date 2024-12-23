@@ -1,9 +1,12 @@
-package edu.bothell.multi_ui;
+package edu.bothell.multi_ui.ui.swing;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 
 import javax.swing.JFrame;
+
+import edu.bothell.multi_ui.core.Control;
+import edu.bothell.multi_ui.ui.UI;
 
 public final class Swing extends JFrame implements UI {
     

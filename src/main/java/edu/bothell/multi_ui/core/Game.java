@@ -1,4 +1,4 @@
-package edu.bothell.multi_ui;
+package edu.bothell.multi_ui.core;
 
 import java.util.ArrayList;
 
@@ -12,7 +12,7 @@ public class Game {
 
     public Game(Control c){
         this.turn = 0;
-        this.s = new State();
+        this.s = (State) new World();
         this.p = new ArrayList<>();
     }
     
@@ -29,6 +29,14 @@ public class Game {
         return addPlayer(p);
     }
 
+    public char[] getPlayersChar(){
+        char[] pcs = new char[p.size()];
+        for(int i = 0; i < pcs.length; i++) 
+            pcs[i] = p.get(i).getChar();
+        
+        return pcs;
+    }
+    
     public boolean isValid(int[] pos, String sId){
         System.out.println("isVAlid?"+s.getIt(pos)+"|" + sId+"|" + active.getSId()+"|");
         return s.getIt(pos) == ' ' && active.getSId().equals(sId);
