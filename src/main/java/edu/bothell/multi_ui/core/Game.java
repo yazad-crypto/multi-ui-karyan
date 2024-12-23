@@ -39,7 +39,7 @@ public class Game {
     
     public boolean isValid(int[] pos, String sId){
         System.out.println("isVAlid?"+s.getIt(pos)+"|" + sId+"|" + active.getSId()+"|");
-        return s.getIt(pos) == ' ' && active.getSId().equals(sId);
+        return s.isOpen(pos) && active.getSId().equals(sId);
     }
 
     public char play(int[] pos, String sId){

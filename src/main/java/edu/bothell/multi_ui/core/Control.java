@@ -32,6 +32,7 @@ public class Control {
         return this.g.getState();
     }
 
+    // pos[0] is X
     public char update(int[] pos, String sId) {
         return g.play(pos, sId);
     }

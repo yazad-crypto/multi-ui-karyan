@@ -2,7 +2,7 @@ package edu.bothell.multi_ui.core;
 
 import java.util.Arrays;
 
-public class State {
+public class State implements Statable {
     public final char[][]   S = new char[][]{
         {' ',' ',' ',' ',' ',' '},
         {' ',' ',' ',' ',' ',' '},
@@ -29,12 +29,20 @@ public class State {
         return S[y][x];
     }
 
-    public char getIt(int[] pos){
-        return S[pos[1]][pos[0]];
-    }
-
     public char[][] getIt(){
         return S;
     }
+
+    @Override
+    public Object getIt(int[] pos){
+        return S[pos[1]][pos[0]];
+    }
+
+    @Override
+    public boolean isOpen(int[] pos){
+        return S[pos[1]][pos[0]] == ' ';
+    }
+
+    
     
 }

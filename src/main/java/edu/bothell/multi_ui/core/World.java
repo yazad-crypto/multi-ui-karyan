@@ -3,7 +3,7 @@ package edu.bothell.multi_ui.core;
 public class World extends State {
     // PROPERTIES ----------------------------------------------------------------
     private final char[][] S = super.getIt();
-    private Location[][] map;
+    private Location[][] map; // Map array is y,x
     
     // CONSTRUCTOR ----------------------------------------------------------------
     public World(){
