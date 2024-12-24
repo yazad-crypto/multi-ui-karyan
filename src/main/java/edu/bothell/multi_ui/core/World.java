@@ -15,13 +15,21 @@ public class World extends State {
 
     // METHODS -------------------------------------------------------------------
     public void build(){
+        Terrain[][] terrains = generateTerrainMap();
+        
         for(int y = 0; y < S.length; y++){
             map[y] = new Location[ S[y].length ];
             for(int x=0; x < map[y].length; x++)
-                map[y][x] = new Location(x,y);
+                map[y][x] = new Location(x,y, Terrain.CITY);
         }
 
         setAdjacents();
+    }
+
+    private Terrain[][] generateTerrainMap(){
+        Terrain[][] m = new Terrain[3][3];
+
+        return m;
     }
 
     private void setAdjacents(){
@@ -51,6 +59,12 @@ public class World extends State {
         nX = (nX + map[nY].length) % map[nY].length;
         
         return map[nY][nX];
+    }
+
+    @Override
+    public Object getIt(int[] pos){
+        System.out.println("world get's it!");
+        return map[pos[1]][pos[0]];
     }
 
 }

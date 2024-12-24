@@ -9,19 +9,25 @@ public class Location {
     // PROPERTIES ----------------------------------------------------------------
     private final boolean[] walls = new boolean[6]; // Walls: {NE, E, SE, SW, W, NW}
     private final List<Thing> occupants = new ArrayList<>(); // Objects in this location
-    private final List<Location> adjacent = new ArrayList<>(); // Adjacent locations
+    private final List<Location> adjacents = new ArrayList<>(); // Adjacent locations
+    private final Terrain t;
     private Locatable uiElem; // Link to GUI element (e.g., Swing or Web)
 
     private final int x, y; // Hex grid coordinates
     private Game game; // Reference to the parent game
 
     // CONSTRUCTOR --------------------------------------------------------------
-    public Location(int x, int y) {
+    public Location(int x, int y, Terrain t) {
         this.x = x;
         this.y = y;
+        this.t = t;
     }
 
     // METHODS ------------------------------------------------------------------
+
+    public Terrain getTerrain() {
+        return t;
+    }
 
     // Walls
     public boolean hasWall(Directions dir) {
@@ -34,17 +40,17 @@ public class Location {
 
     // Adjacent Locations
     public List<Location> getAdjacent() {
-        return new ArrayList<>(adjacent); // Return a copy to prevent external modification
+        return new ArrayList<>(adjacents); // Return a copy to prevent external modification
     }
 
     public void addAdjacent(Location loc) {
-        if (!adjacent.contains(loc)) {
-            adjacent.add(loc);
+        if (!adjacents.contains(loc)) {
+            adjacents.add(loc);
         }
     }
 
     public void removeAdjacent(Location loc) {
-        adjacent.remove(loc);
+        adjacents.remove(loc);
     }
 
     // Occupants
