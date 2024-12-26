@@ -6,8 +6,6 @@ import edu.bothell.multi_ui.core.World;
 
 public class Main {
     public static void main(String[] args){
-
-        new World();
         
         Player p  = new Player('x');
         Control c = new Control(p);

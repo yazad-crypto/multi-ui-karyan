@@ -27,7 +27,7 @@ public enum Directions {
     /**
      * Get the opposite direction.
      */
-    public Directions getOpposite() {
+    public Directions opposite() {
         switch (this) {
             case NE: return SW;
             case E:  return W;

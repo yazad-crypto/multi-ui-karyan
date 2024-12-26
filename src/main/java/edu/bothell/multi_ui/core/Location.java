@@ -10,7 +10,7 @@ public class Location {
     private final boolean[] walls = new boolean[6]; // Walls: {NE, E, SE, SW, W, NW}
     private final List<Thing> occupants = new ArrayList<>(); // Objects in this location
     private final List<Location> adjacents = new ArrayList<>(); // Adjacent locations
-    private final Terrain t;
+    private Terrain t;
     private Locatable uiElem; // Link to GUI element (e.g., Swing or Web)
 
     private final int x, y; // Hex grid coordinates
@@ -25,11 +25,23 @@ public class Location {
 
     // METHODS ------------------------------------------------------------------
 
+    public void setTerrain(Terrain t) {
+        this.t = t;
+    }
+
     public Terrain getTerrain() {
         return t;
     }
 
     // Walls
+    public void setWalls(boolean[] walls) {
+        System.arraycopy(walls, 0, this.walls, 0, Math.min(walls.length, this.walls.length));
+    }
+    
+    public boolean[] getWalls() {
+        return walls.clone();
+    }
+
     public boolean hasWall(Directions dir) {
         return walls[dir.ordinal()];
     }
