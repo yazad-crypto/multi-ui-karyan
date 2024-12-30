@@ -61,12 +61,19 @@ public class Control {
         return g.getTurn();
     }
 
-    public String[][] getLocations() {
+    public String[][] getTerrainStrings() {
         // TODO Auto-generated method stub
-        ((World)g.getState()).getMap();
+        Location ls[][] = ((World)g.getState()).getMap();
 
-        String[][] ls = new String[2][];
-        return ls;
+        String[][] ts = new String[ls.length][];
+        for(int y = 0; y < ls.length; y++){
+            ts[y] = new String[ls[y].length];
+            for(int x = 0; x < ls[y].length; x++){
+                ts[y][x] = ls[y][x].getTerrainString();
+            }
+        }
+
+        return ts;
     }
 
 }

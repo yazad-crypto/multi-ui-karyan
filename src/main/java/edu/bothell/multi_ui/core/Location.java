@@ -213,4 +213,8 @@ public class Location {
         }
         return Terrain.BRICK;
     }
+
+    public String getTerrainString(){
+        return (t == null)? " ": t.name();
+    }
 }

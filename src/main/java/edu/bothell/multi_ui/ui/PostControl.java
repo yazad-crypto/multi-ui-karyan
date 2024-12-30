@@ -43,10 +43,11 @@ public class PostControl {
         }
 
         char[][] s = c.getState().getIt();
-        String[][] locs = c.getLocations();
+        String[][] t = c.getTerrainStrings();
         m.addAttribute("mode", "socket");
         m.addAttribute("die", rnd);
         m.addAttribute("s", s);
+        m.addAttribute("t", t);
         m.addAttribute("turn", c.getTurn());
         m.addAttribute("pc", c.getPlayerCount());
         m.addAttribute("sessionId", sessionId);
