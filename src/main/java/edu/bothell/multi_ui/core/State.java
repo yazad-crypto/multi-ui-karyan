@@ -2,7 +2,7 @@ package edu.bothell.multi_ui.core;
 
 import java.util.Arrays;
 
-public class State implements Statable {
+public class State implements Statable<int[]> {
     public final char[][]   S = new char[][]{
         {' ',' ',' ',' ',' ',' '},
         {' ',' ',' ',' ',' ',' '},
@@ -32,6 +32,8 @@ public class State implements Statable {
     public char[][] getIt(){
         return S;
     }
+    
+    
 
     @Override
     public Object getIt(int[] pos){
@@ -43,6 +45,10 @@ public class State implements Statable {
         return S[pos[1]][pos[0]] == ' ';
     }
 
-    
+    @Override
+    public int[] getAdj(int x, int y, Directions d) {
+        return new int[]{x + d.dX(), y + d.dY() };
+    }
     
 }
+

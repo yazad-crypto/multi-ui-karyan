@@ -43,6 +43,7 @@ public class PostControl {
         }
 
         char[][] s = c.getState().getIt();
+        String[][] locs = c.getLocations();
         m.addAttribute("mode", "socket");
         m.addAttribute("die", rnd);
         m.addAttribute("s", s);
