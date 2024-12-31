@@ -65,6 +65,28 @@ public class Crawler {
     }
 
     // METHODS -----------------------------------------------------------------------
+    public void walls(int startX, int startY, die){
+        Location start = w.getLocation(startX, startY);
+        if (start == null) {
+            throw new IllegalStateException("Starting location not found at (" + startX + ", " + startY + ").");
+        }
+
+        // Set the initial terrain
+        start.setTerrain(startT);
+        stack.push(start);
+
+        while( !stack.isEmpty() ){
+            Location l = stack.pop();
+            for(Location nei : l.getAdjacents() ){
+                if(nei.getTerrain() == null){
+                    boolean[] neiWalls = buildWalls(nei,die);
+                    nei.setWalls(neiWalls);
+                    stack.push(nei);
+                }
+            }
+        }
+    }
+
     public void terrain(int startX, int startY, Terrain startT, Random die ){
         Location start = w.getLocation(startX, startY); 
         if (start == null) {
@@ -72,16 +94,12 @@ public class Crawler {
         }
 
         // Set the initial terrain
-        System.out.println("Setting initial terrain at (" + startX + ", " + startY + ") to " + startT);
         start.setTerrain(startT);
-        System.out.println("...and it is... " + start.getTerrain() );
         stack.push(start);
 
         while( !stack.isEmpty() ){
             Location l = stack.pop();
-            System.out.println("Neighbors of " + l);
             for(Location nei : l.getAdjacents() ){
-                System.out.println("nei: " + nei);
                 if(nei.getTerrain() == null){
                     Terrain neiTerrain = bestFit(nei,die);
                     nei.setTerrain(neiTerrain);

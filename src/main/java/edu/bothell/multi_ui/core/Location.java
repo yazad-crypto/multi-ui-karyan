@@ -11,7 +11,7 @@ import edu.bothell.multi_ui.ui.swing.Locatable;
 public class Location {
     // PROPERTIES ----------------------------------------------------------------
     public static final int EDGES = Directions.values().length; // Walls: {NE, E, SE, SW, W, NW}
-    private final boolean[] walls = new boolean[EDGES]; 
+    private final Wall[] walls = new Wall[EDGES]; 
     private final List<Thing> occupants = new ArrayList<>(); // Objects in this location
     private final List<Location> adjacents = new ArrayList<>(); // Adjacent locations
     private Terrain t;
@@ -41,19 +41,19 @@ public class Location {
 
     // Walls
     public void setWalls(boolean[] walls) {
-        System.arraycopy(walls, 0, this.walls, 0, Math.min(walls.length, this.walls.length));
+        //System.arraycopy(walls, 0, this.walls, 0, Math.min(walls.length, this.walls.length));
     }
     
-    public boolean[] getWalls() {
+    public Wall[] getWalls() {
         return walls.clone();
     }
 
     public boolean hasWall(Directions dir) {
-        return walls[dir.ordinal()];
+        return walls[dir.ordinal()] != null;
     }
 
     public void setWall(Directions dir, boolean hasWall) {
-        walls[dir.ordinal()] = hasWall;
+       // walls[dir.ordinal()] = hasWall;
     }
 
     // Adjacent Locations
