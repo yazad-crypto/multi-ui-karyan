@@ -61,6 +61,10 @@ public class Control {
         return g.getTurn();
     }
 
+    public Location getLocation(int x, int y){
+        return g.getLocation(x,y);
+    }
+
     public String[][] getTerrainStrings() {
         // TODO Auto-generated method stub
         Location ls[][] = ((World)g.getState()).getMap();
@@ -74,6 +78,11 @@ public class Control {
         }
 
         return ts;
+    }
+
+    public String checkConnected(int x, int y) {
+        return "" + getLocation(x, y).getMatchTerrain(null);
+        //throw new UnsupportedOperationException("Unimplemented method 'checkConnected'");
     }
 
 }

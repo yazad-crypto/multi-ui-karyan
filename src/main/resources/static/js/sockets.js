@@ -16,6 +16,8 @@ const setup = function(){
 
 }
 
+
+
 const redrawPlayer = function(d){
     const p = document.getElementById("p");
     p.textContent = d;
@@ -34,4 +36,10 @@ const redrawBoard = function(d,t){
         }
     }
 }
+const buttons = document.getElementById("board").querySelectorAll("button");
 
+for(let b of buttons){
+    b.addEventListener("click",function(e){
+        alert(this);
+    });
+}

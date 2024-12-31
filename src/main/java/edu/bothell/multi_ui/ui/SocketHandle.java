@@ -39,7 +39,7 @@ public class SocketHandle extends TextWebSocketHandler {
     @ResponseBody
     public ResponseEntity<char[]> getSocket( HttpSession sesion, Model m){
         String sId = sesion.getId();
-    
+
         if(!s.contains(sId) && s.size() <= c.getMaxPlayers() ){
             this.s.add(sId);
             c.addPlayer( (char)(s.size() + '1'), sId );

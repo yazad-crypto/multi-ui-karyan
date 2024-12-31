@@ -12,7 +12,7 @@ public class Game {
 
     public Game(Control c){
         this.turn = 0;
-        this.s = (State) new World();
+        this.s = new World();
         this.p = new ArrayList<>();
     }
     
@@ -57,6 +57,10 @@ public class Game {
 
     public State getState() {
         return this.s;
+    }
+
+    public Location getLocation(int x, int y) {
+        return ((World)s).getLocation(x, y);
     }
 
     public int getMaxPlayers() {

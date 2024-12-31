@@ -7,10 +7,10 @@ public enum Terrain {
     TREES   (1,4,2,4, '⽊'),
     FOREST  (2,5,1,12,'㭑'),
     MOUNTAIN(2,5,3,3, '⛰'),
-    CAVE    (3,5,1,36,'☶'),
-    CITY    (3,5,2,3, '㑞'),
+    CAVE    (3,5,1,6,'☶'),
+    CITY    (3,5,2,2, '㑞'),
     SWAMP   (0,5,2,7, 'w'),
-    WATER   (3,5,2,36,'~'),
+    WATER   (3,5,2,2,'~'),
     BRICK   (0,0,0,1, 'X');
 
     private int wallsMin;
@@ -20,18 +20,18 @@ public enum Terrain {
     private char symbol;
 
     private static final int[][] adjacencyPreferences = {
-        // PLAIN, DESERT, HILLS, TREES, FOREST, MOUNTAIN, CAVE, CITY, SWAMP, WATER, BRICK
-        {9, 5, 5, 2, 1, 1, 0, 2, 3, 2, 0}, // PLAIN
-        {5, 9, 4, 1, 1, 1, 0, 1, 3, 1, 0}, // DESERT
-        {5, 4, 9, 3, 2, 2, 1, 1, 4, 2, 0}, // HILLS
-        {2, 1, 3, 9, 6, 2, 1, 1, 3, 2, 0}, // TREES
-        {1, 0, 2, 6, 9, 3, 2, 0, 2, 2, 0}, // FOREST
-        {1, 1, 2, 2, 3, 9, 5, 1, 2, 1, 0}, // MOUNTAIN
-        {0, 0, 1, 1, 2, 5, 9, 0, 1, 4, 0}, // CAVE
-        {2, 1, 2, 1, 1, 2, 1, 9, 3, 5, 0}, // CITY
-        {3, 3, 4, 3, 2, 2, 1, 0, 9, 5, 0}, // SWAMP
-        {3, 3, 4, 3, 2, 2, 1, 3, 9, 9, 0}, // WATER
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}  // BRICK
+    // PLAIN, DESERT, HILLS, TREES, FOREST, MOUNTAIN, CAVE, CITY, SWAMP, WATER, BRICK
+        {500,   2,  200, 1,     1, 1, 0, 1, 2, 4, 0}, // PLAIN
+        {2,     3,  2,   1,     1, 1, 0, 1, 2, 4, 0}, // DESERT
+        {200,   2,  300, 500,   1, 300, 1, 1, 2, 4, 0}, // HILLS
+        {1,     1,  500, 500, 200, 1, 1, 1, 2, 5, 0}, // TREES
+        {1,     1,  1,   200, 400, 2, 2, 1, 1, 6, 0}, // FOREST
+        {1,     1,  300, 1,     2, 300, 3, 1, 1, 5, 0}, // MOUNTAIN
+        {0,     0,  1,   1,     2, 3, 3, 0, 1, 5, 0}, // CAVE
+        {3,     1,  1,   2,     2, 4, 4, 10, 0, 10, 0}, // CITY
+        {2,     2,  2,   2, 1, 1, 1, 2, 3, 5, 0}, // SWAMP
+        {4,     4,  4,   5, 6, 5, 5, 4, 5, 1100, 0}, // WATER
+        {0,     0,  0,   0, 0, 0, 0, 0, 0, 0, 0}  // BRICK
     };
 
     private Terrain(int wallsMin, int wallsMax, int visibility, int maxConnect, char symbol){
@@ -61,6 +61,10 @@ public enum Terrain {
         return wallsMin;
     }
 
+    public int[] getPreference(){
+        return adjacencyPreferences[this.ordinal()];
+    }
+    
     public int getPreference(Terrain neighborTerrain) {
         int i = neighborTerrain.ordinal();
         return adjacencyPreferences[this.ordinal()][i];

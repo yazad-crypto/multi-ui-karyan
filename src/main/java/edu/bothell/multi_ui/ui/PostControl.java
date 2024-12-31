@@ -71,6 +71,7 @@ public class PostControl {
             int x = Integer.parseInt(p[0]);
             int y = Integer.parseInt(p[1]);
             this.c.update( new int[]{x,y}, s.getId() );
+            System.out.println( "---------" + c.checkConnected(x, y) );
         }
         return "redirect:/game";
     }

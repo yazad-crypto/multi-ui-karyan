@@ -1,0 +1,120 @@
+:root{
+    --p1-c:rgba(0,150,255,.75);         /*var(--p1-c) -> (0,150,255,.75)*/
+    --p2-c:rgba(0,255,200,.75);         /*var(--p2-c) -> (0,255,200,.75)*/
+    --p3-c:rgba(150,100,250,.75);       /*var(--p3-c) -> (150,100,250,.75)*/
+}
+
+body{text-align: center; margin:0; padding:0; position: relative; background:#987}
+.board > *{
+    display: inline-block;
+    margin: auto;
+    transform: perspective(30rem) rotateX(60deg) translateZ(5rem) translateX(-.5rem);
+    perspective: 30rem; 
+}
+.board{height:6rem; position: relative; z-index: 2;}
+div{position: relative;}
+button{
+    width:2rem; height:1.33rem; margin:.42rem .2rem ; position: relative; vertical-align: middle; background-color: lightblue; border:none;
+}
+.board button i {
+    font-style: normal;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 900;
+    transform: scaleY(1.5);
+}
+.row:nth-child(even){ left:1.1rem; position: relative;  }
+button::before,
+button::after{ border:1rem solid transparent; content:""; border-width:.5rem 1rem .5rem; display: block; position:absolute; left:0 }
+button::before{border-top-color: lightblue; top:100%}
+button::after{border-bottom-color: lightblue; bottom:100%}
+body .c1{background-color:var(--p1-c) !important}
+body button.c1:before{border-top-color:var(--p1-c) !important;} 
+body button.c1:after{border-bottom-color:var(--p1-c) !important;} 
+body .c2{background-color:var(--p2-c) !important}
+body button.c2:before{border-top-color:var(--p2-c) !important;} 
+body button.c2:after{border-bottom-color:var(--p2-c) !important;}         
+body .c3{background-color:var(--p3-c) !important}
+body button.c3:before{border-top-color:var(--p3-c) !important;} 
+body button.c3:after{border-bottom-color:var(--p3-c) !important;}         
+body.c1 button:hover{background-color:rgba(0,150,255,.5)}
+body.c1 button:hover:before{border-top-color:rgba(0,150,255,.5) ;} 
+body.c1 button:hover:after{border-bottom-color:rgba(0,150,255,.5) ;} 
+body.c2 button:hover{background-color:rgba(0,255,200,.5)}
+body.c2 button:hover:before{border-top-color:rgba(0,255,200,.5)} 
+body.c2 button:hover:after{border-bottom-color:rgba(0,255,200,.5)} 
+body.c3 button:hover{background-color:rgba(150,100,250,.5)}
+body.c3 button:hover:before{border-top-color:rgba(150,100,250,.5)} 
+body.c3 button:hover:after{border-bottom-color:rgba(150,100,250,.5);} 
+
+
+
+/*=========================================================================*/
+/* ROUND */
+/*=========================================================================*/
+body button{
+    height: 3rem;
+    width:3rem;
+    border-radius: 50%;
+    margin:-.4rem -.2rem;
+    opacity: .75;
+    background-color: #ba9;
+    background-size: 112%;
+    background-position: bottom;
+    box-shadow: .25rem .25rem .25rem rgba(0,0,0,.5), inset .25rem .25rem .25rem rgba(0,0,0,.5);
+}
+body button.FOREST{
+    background-color:rgba(10,50,05);
+    zbackground-image: url(/img/FOREST.webp);
+
+}
+body button.TREES{
+    background-color:rgba(20,100,15);
+    zbackground-image: url(/img/TREES.webp);
+
+}
+body button.CITY{
+    background-color:rgba(100,100,100);
+    xbackground-image: url(/img/CITY.webp);
+    background-size: 180%;
+    background-position: center 60%;
+
+}
+body button.CAVE{
+    background-color:rgba(50,50,50);
+    zbackground-image: url(/img/CAVE.webp);
+}
+body button.MOUNTAIN{
+    background-color:rgba(180,175,190);
+    zbackground-image: url(/img/MOUNTAIN.webp);
+}
+body button.WATER{
+    background-color: rgba(70,180,190);
+    background-color: none;
+    box-shadow: none;
+    zbackground-image: url(/img/WATER.webp);
+}
+body button.SWAMP{
+    background-color: rgba(150,170,140);
+    zbackground-image: url(/img/SWAMP.webp);
+}
+body button.PLAIN{
+    background-color: rgba(170,200,100);
+    zbackground-image: url(/img/PLAIN.webp);
+}
+body button.HILLS{
+    background-color: rgba(100,200,100);
+    zbackground-image: url(/img/HILLS.webp);
+}
+body button.DESERT{
+    background-color: rgba(200,200,100);
+    zbackground-image: url(/img/HILLS.webp);
+}
+
+
+
+html body .board > * {
+    transform: none;  zperspective(30rem) rotateX(20deg) translateZ(5rem) translateX(-.5rem);
+}
+html body .board > * > * { white-space: nowrap;}
+body div button::before,
+body div button::after {border:none;}

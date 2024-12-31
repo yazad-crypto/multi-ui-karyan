@@ -1,7 +1,6 @@
 package edu.bothell.multi_ui.core;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,7 +11,6 @@ import edu.bothell.multi_ui.ui.swing.Locatable;
 public class Location {
     // PROPERTIES ----------------------------------------------------------------
     public static final int EDGES = Directions.values().length; // Walls: {NE, E, SE, SW, W, NW}
-    private final boolean[] edges = new boolean[EDGES];
     private final boolean[] walls = new boolean[EDGES]; 
     private final List<Thing> occupants = new ArrayList<>(); // Objects in this location
     private final List<Location> adjacents = new ArrayList<>(); // Adjacent locations
@@ -60,18 +58,20 @@ public class Location {
 
     // Adjacent Locations
     public List<Location> getAdjacents() {
+        System.out.println("am I about to null!!!!! " + adjacents);
         return new ArrayList<>(adjacents); // Return a copy to prevent external modification
     }
 
     public void addAdjacent(Location loc) {
 
-        if (!adjacents.contains(loc)) {
+        if (loc != null && !adjacents.contains(loc)) {
+            System.out.println("add? " + loc + "  " + adjacents);
             adjacents.add(loc);
         }
         else{
             System.out.println();
             System.out.println();
-            System.out.println("addA");   
+            System.out.println("--------------addA");   
             System.out.println("already");
         }
     }
@@ -126,41 +126,29 @@ public class Location {
                 '}';
     }
 
-    private String wallsToString() {
-        StringBuilder sb = new StringBuilder();
-        Directions[] directions = Directions.values();
-        for (int i = 0; i < walls.length; i++) {
-            if (walls[i]) sb.append(directions[i]).append(" ");
-        }
-        return sb.toString().trim();
+    public List<Location> getMatchTerrain(List<Location> visited){
+        if (this.getTerrain() == null) return visited;
+        if (visited == null) visited = new ArrayList<>();
+        
+
+        // Add this location to the visited list
+        if   (!visited.contains(this)) visited.add(this);
+        else return visited; // Avoid infinite loops       
     
-    }
-
-    public List<Location> getMatchTerrain(List<Location> ls){
-        if(null == ls)  ls = new ArrayList<Location>();
-        if(!ls.contains(this)) ls.add(this);
-
-        if(this.getTerrain() == null) return ls;
-        for(Location adj:this.adjacents){
-            if(adj.getTerrain() == null) continue;
-            if(adj.getTerrain().equals(this.getTerrain()) && !ls.contains(adj) ){
-                adj.getMatchTerrain(ls);
+        // Explore adjacent locations
+        for (Location adj : this.adjacents) {
+            if (adj.getTerrain() != null 
+                    && adj.getTerrain().equals(this.getTerrain()) 
+                    && !visited.contains(adj)) {
+                adj.getMatchTerrain(visited); // Recursively collect matches
             }
-                
         }
-        return ls;
+    
+        return visited;
     }   
 
 
     public Terrain getBestTerrian(Random die) {
-        System.out.println("Terrain for :"+this);
-       // If no terrain is set yet, set it to CITY
-       //if (this.getTerrain() == null) this.setTerrain(Terrain.CITY);
-
-        System.out.println();
-        System.out.println("GETBEST TERRAIN START");
-        System.out.println("Current location: " + this);
-        System.out.println("Current terrain: " + this.getTerrain());
 
         // Initialize the hashmap for terrain odds
         Map<Terrain, Integer> weights = new HashMap<>();
@@ -180,11 +168,7 @@ public class Location {
 
         // Step 5: Fallback case for debugging
         if (weights.isEmpty()) {
-            System.out.println();
-            System.out.println();
-            System.out.println("No valid terrains found. Defaulting to CITY.");
-            System.out.println();
-            System.out.println();
+
             return Terrain.CITY;
         }
 

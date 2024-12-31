@@ -3,49 +3,7 @@
 <head>
 
     <meta  th:if="${mode != 'socket'}" http-equiv="refresh" content="5">
-    <style>
-        body{text-align: center; margin:0; padding:0; position: relative;}
-        .board > *{
-            display: inline-block;
-            margin: auto;
-            transform: perspective(30rem) rotateX(60deg) translateZ(5rem) translateX(-.5rem);
-            perspective: 30rem; 
-        }
-        .board{height:6rem; position: relative; z-index: 2;}
-        div{position: relative;}
-        button{
-            width:2rem; height:1.33rem; margin:.42rem .2rem ; position: relative; vertical-align: middle; background-color: lightblue; border:none;
-        }
-        .board button i {
-            font-style: normal;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            font-weight: 900;
-            transform: scaleY(1.5);
-        }
-        .row:nth-child(even){ left:1.1rem; position: relative;  }
-        button::before,
-        button::after{ border:1rem solid transparent; content:""; border-width:.5rem 1rem .5rem; display: block; position:absolute; left:0 }
-        button::before{border-top-color: lightblue; top:100%}
-        button::after{border-bottom-color: lightblue; bottom:100%}
-        body .c1{background-color:rgba(0,150,255,.75) !important}
-        body button.c1:before{border-top-color:rgba(0,150,255,.75) !important;} 
-        body button.c1:after{border-bottom-color:rgba(0,150,255,.75) !important;} 
-        body .c2{background-color:rgba(0,255,200,.75) !important}
-        body button.c2:before{border-top-color:rgba(0,255,200,.75) !important;} 
-        body button.c2:after{border-bottom-color:rgba(0,255,200,.75) !important;}         
-        body .c3{background-color:rgba(150,100,250,.75) !important}
-        body button.c3:before{border-top-color:rgba(150,100,250,.75) !important;} 
-        body button.c3:after{border-bottom-color:rgba(150,100,250,.75) !important;}         
-        body.c1 button:hover{background-color:rgba(0,150,255,.5)}
-        body.c1 button:hover:before{border-top-color:rgba(0,150,255,.5) ;} 
-        body.c1 button:hover:after{border-bottom-color:rgba(0,150,255,.5) ;} 
-        body.c2 button:hover{background-color:rgba(0,255,200,.5)}
-        body.c2 button:hover:before{border-top-color:rgba(0,255,200,.5)} 
-        body.c2 button:hover:after{border-bottom-color:rgba(0,255,200,.5)} 
-        body.c3 button:hover{background-color:rgba(150,100,250,.5)}
-        body.c3 button:hover:before{border-top-color:rgba(150,100,250,.5)} 
-        body.c3 button:hover:after{border-bottom-color:rgba(150,100,250,.5);} 
-    </style>
+    <link href="/css/style.css" rel="stylesheet" />
 
 </head>
 <body th:class="${'c'+role}">
