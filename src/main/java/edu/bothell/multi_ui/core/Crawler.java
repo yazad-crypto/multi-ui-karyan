@@ -26,14 +26,10 @@ public class Crawler {
 
         // Step 1: Collect placeholders for neighbor terrains prefs
         int[] totalPrefs = new int[Terrain.values().length];
-        boolean hasNeiTerrain = false;
-
-        System.out.println("me: " + l );
-        System.out.println("neis: " + l.getAdjacents() );
+        boolean hasNeiTerrain = false;      // book-keeping
 
         // Step 3: Iterate through all Neighbords to sum preferences
         for(Location nei: l.getAdjacents()){
-            System.out.println("working one...: " + l );
             Terrain t = nei.getTerrain();   // Fetch terrain of the neighbor
             if(t == null) continue;         // Skip this if this neighbor location isn't set
             else hasNeiTerrain = true;      // If it is, don't worry about this check again.
@@ -65,22 +61,20 @@ public class Crawler {
     }
 
     // METHODS -----------------------------------------------------------------------
-    public void walls(int startX, int startY, die){
+    public void walls(int startX, int startY, Random die){
         Location start = w.getLocation(startX, startY);
         if (start == null) {
             throw new IllegalStateException("Starting location not found at (" + startX + ", " + startY + ").");
         }
 
-        // Set the initial terrain
-        start.setTerrain(startT);
+
         stack.push(start);
 
         while( !stack.isEmpty() ){
             Location l = stack.pop();
             for(Location nei : l.getAdjacents() ){
                 if(nei.getTerrain() == null){
-                    boolean[] neiWalls = buildWalls(nei,die);
-                    nei.setWalls(neiWalls);
+         
                     stack.push(nei);
                 }
             }
@@ -100,11 +94,13 @@ public class Crawler {
         while( !stack.isEmpty() ){
             Location l = stack.pop();
             for(Location nei : l.getAdjacents() ){
+                System.out.println(nei);
+                
                 if(nei.getTerrain() == null){
                     Terrain neiTerrain = bestFit(nei,die);
                     nei.setTerrain(neiTerrain);
                     stack.push(nei);
-                }
+                }/* */
             }
         }        
     }

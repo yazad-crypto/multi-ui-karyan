@@ -1,6 +1,7 @@
 package edu.bothell.multi_ui.core;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 public class Wall extends Thing {
@@ -9,30 +10,27 @@ public class Wall extends Thing {
     }
 
     public static void build(Location l, Random die){
-        if(getWallMax(l) == 0) return;
-        
-        Wall[] walls = l.getWalls(); // get existing walls
+        if(l.getTerrain() == null)  return;
 
-        ArrayList<Directions> ds = new ArrayList<>();
-        for(int i = 0; i < walls.length; i++){
-            if(walls[i] == null) ds.add( Directions.values()[i]);
+        ArrayList<Directions> edges = new ArrayList<>(Arrays.asList(Directions.values()));
+        ArrayList<Directions> openings = new ArrayList<>();
+        for(Directions d : edges) if(!l.hasWall(d)) openings.add(d);
+        
+        //Add minimum walls
+        int min = (l.getTerrain() != null)? l.getTerrain().getWallsMin() : 3;
+        for(int i = 0; i < min - l.getWallCount(); i++ ){
+            int roll = die.nextInt(openings.size());
+            l.addWall( openings.get(roll) );
+            openings.remove(roll);
+        }
+
+        //Roll for maximum walls
+        int range = (int) Math.pow(2, openings.size() );
+        int roll = die.nextInt(range);
+        
+        for(int i = 0; i < openings.size(); i++){
+            if ((roll & (1 << i)) != 0) l.addWall(openings.get(i));
         }
         
-    }
-    
-    public static int getWallMin(Location l){
-        if(l.getTerrain() == null) return 0;
-        return Math.min(l.getTerrain().getWallsMin() - getWallCount(l),0);
-    }
-
-    public static int getWallMax(Location l){
-        if(l.getTerrain() == null) return Location.EDGES - 1;
-        return Math.min(l.getTerrain().getWallsMax() - getWallCount(l), Location.EDGES - 1 );
-    }
-
-    public static int getWallCount(Location l){
-        int count = 0;
-        for(Wall w:l.getWalls() ) if(w != null) count++;
-        return count;
     }
 }

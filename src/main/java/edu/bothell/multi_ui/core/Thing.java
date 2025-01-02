@@ -10,11 +10,16 @@ public class Thing {
         this.ls = new Location[size];
         this.durrability = 1;
     }
-    
+
     public Thing(int size){
         this.size = size;
         this.ls = new Location[size];
         this.durrability = 1;
+    }
+
+    public void setLocations(Location[] newLs){
+        for(int i = 0; i < ls.length; i++)
+            ls[i] = newLs[i]; 
     }
 
     public Location[] getLocations(){

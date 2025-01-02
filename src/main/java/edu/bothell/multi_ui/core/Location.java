@@ -11,9 +11,9 @@ import edu.bothell.multi_ui.ui.swing.Locatable;
 public class Location {
     // PROPERTIES ----------------------------------------------------------------
     public static final int EDGES = Directions.values().length; // Walls: {NE, E, SE, SW, W, NW}
+    private final Location[] adjacents = new Location[EDGES]; // Adjacent locations
     private final Wall[] walls = new Wall[EDGES]; 
     private final List<Thing> occupants = new ArrayList<>(); // Objects in this location
-    private final List<Location> adjacents = new ArrayList<>(); // Adjacent locations
     private Terrain t;
     private Locatable uiElem; // Link to GUI element (e.g., Swing or Web)
 
@@ -40,10 +40,24 @@ public class Location {
     }    
 
     // Walls
-    public void setWalls(boolean[] walls) {
-        //System.arraycopy(walls, 0, this.walls, 0, Math.min(walls.length, this.walls.length));
+    public void addWall (Directions d) {
+        if(walls[d.ordinal()] == null && getAdjacent(d) != null)
+            walls[d.ordinal()] = shareWall(d,getAdjacent(d));
     }
     
+    private Wall shareWall(Directions d, Location l){
+        Wall w = new Wall();
+        w.setLocations( new Location[]{this,l} );
+        if(l != null) l.addWall(d.opposite());
+        return w;
+    }
+
+    public int getWallCount(){
+        int count = 0;
+        for(Wall w: walls) if(w!=null) count++;
+        return count;
+    }
+
     public Wall[] getWalls() {
         return walls.clone();
     }
@@ -52,32 +66,26 @@ public class Location {
         return walls[dir.ordinal()] != null;
     }
 
-    public void setWall(Directions dir, boolean hasWall) {
-       // walls[dir.ordinal()] = hasWall;
-    }
 
+    public int getAdjCount(){
+        int count = 0;
+        for(Location l:adjacents) if(l != null) count++;
+        return count;
+    }
+    public Location getAdjacent(Directions d) {
+        return this.adjacents[d.ordinal()];
+    }
     // Adjacent Locations
-    public List<Location> getAdjacents() {
-        System.out.println("am I about to null!!!!! " + adjacents);
-        return new ArrayList<>(adjacents); // Return a copy to prevent external modification
+    public Location[] getAdjacents() {
+        return this.adjacents; // TODO: DOES NOT Return a copy ??
     }
 
-    public void addAdjacent(Location loc) {
-
-        if (loc != null && !adjacents.contains(loc)) {
-            System.out.println("add? " + loc + "  " + adjacents);
-            adjacents.add(loc);
+    public void addAdjacent(Location loc, Directions d) {
+        System.out.println("addAdjacent");
+        System.out.println(loc);
+        if (loc != null && adjacents[d.ordinal()] == null) {
+            adjacents[d.ordinal()] = loc;
         }
-        else{
-            System.out.println();
-            System.out.println();
-            System.out.println("--------------addA");   
-            System.out.println("already");
-        }
-    }
-
-    public void removeAdjacent(Location loc) {
-        adjacents.remove(loc);
     }
 
     // Occupants
@@ -120,7 +128,7 @@ public class Location {
     // Utility Methods
     @Override
     public String toString() {
-        if(adjacents.size() > 1 && t != null) return "" + t.getSymbol();
+        if(adjacents.length > 1 && t != null) return "" + t.getSymbol();
         return "L{" + x +
                 "," + y +
                 '}';
@@ -179,8 +187,6 @@ public class Location {
         
  
 
-        
-
         int totalWeight = weights.values().stream().mapToInt(Integer::intValue).sum();
         System.out.println(totalWeight);
         if(totalWeight < 1) return Terrain.CITY;
@@ -201,4 +207,7 @@ public class Location {
     public String getTerrainString(){
         return (t == null)? " ": t.name();
     }
+
+
+
 }

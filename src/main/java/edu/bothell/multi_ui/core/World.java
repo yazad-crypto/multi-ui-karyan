@@ -37,8 +37,9 @@ public class World extends State {
                 // Step 2: Loop Directions and add them as adjacent
                 for(Directions d: Directions.values()){
                     Location nei = getNeighbor(map[y][x], d);
-                    map[y][x].addAdjacent(nei);
-                    nei.addAdjacent(map[y][x]); // Ensure bidirectional linkage
+                    System.out.println(nei);
+                    map[y][x].addAdjacent(nei, d);
+                    nei.addAdjacent(map[y][x], d.opposite()); // Ensure bidirectional linkage
                 }
 
                 
@@ -61,8 +62,6 @@ public class World extends State {
         // Calculate the neighbor coordinates
         int nX = x + d.dX() + ((d.dY() != 0) ? 0 : y % 2);
         int nY = y + d.dY();
-
-
 
         // Wrap vertical (rows)
         nY = (nY + map.length) % map.length;
