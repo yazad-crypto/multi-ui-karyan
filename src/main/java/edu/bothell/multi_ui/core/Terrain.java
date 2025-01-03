@@ -1,16 +1,16 @@
 package edu.bothell.multi_ui.core;
 
 public enum Terrain {
-    PLAIN   (0,2,3,9, '='),
-    DESERT  (0,3,3,8, '_'),
-    HILLS   (0,4,4,6, '⪮'),
-    TREES   (1,4,2,4, '⽊'),
-    FOREST  (2,5,1,12,'㭑'),
-    MOUNTAIN(2,5,3,3, '⛰'),
-    CAVE    (3,5,1,6,'☶'),
-    CITY    (3,5,2,5, '㑞'),
-    SWAMP   (0,5,2,7, 'w'),
-    WATER   (3,5,2,99,'~'),
+    PLAIN   (0,2,3,19, '='),
+    DESERT  (0,3,3,12, '_'),
+    HILLS   (0,4,4,8, '⪮'),
+    TREES   (1,4,2,12, '⽊'),
+    FOREST  (2,5,1,50,'㭑'),
+    MOUNTAIN(2,5,3,12, '⛰'),
+    CAVE    (3,5,1,12,'☶'),
+    CITY    (3,5,2,2, '㑞'),
+    SWAMP   (0,5,2,12, 'w'),
+    WATER   (3,5,2,999,'~'),
     BRICK   (0,0,0,1, 'X');
 
     private int wallsMin;

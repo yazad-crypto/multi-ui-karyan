@@ -3,7 +3,8 @@ package edu.bothell.multi_ui.core;
 import java.util.Arrays;
 
 public class State implements Statable<int[]> {
-    public final char[][]   S = new char[][]//[64][96];
+    public final char[][]   S = new char[64][96];
+    /*[][]//[64][96];
     {
         {' ',' ',' ',' ',' ',' '},
         {' ',' ',' ',' ',' ',' '},
@@ -18,6 +19,9 @@ public class State implements Statable<int[]> {
 
     public State(){
         System.out.println("CREATING THE STATE...");
+        for(char[] row: S)
+            for(int x = 0; x < row.length; x++)
+                row[x] = ' ';
     }
 
 
