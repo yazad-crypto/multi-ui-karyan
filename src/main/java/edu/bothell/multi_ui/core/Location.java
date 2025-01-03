@@ -139,10 +139,11 @@ public class Location {
     // Utility Methods
     @Override
     public String toString() {
+        if(t != null) return ""+t;
         return "L{" + x +
                 "," + y +
-                "," + Arrays.toString(walls) +
-                "," + t +
+              // "," + Arrays.toString(walls) +
+              //  "," + t +
                 '}';
     }
 

@@ -109,7 +109,58 @@ body button.DESERT{
     background-color: rgba(200,200,100);
     zbackground-image: url(/img/HILLS.webp);
 }
+body button.BRICK{
+    background-color: red;
+    box-shadow: none !important;
+}
+body button{
+    zbackground-color: transparent !important;
 
+}
+body .board button>b,
+body .board button>b::after,
+body .board button>b::before{
+    display: block;
+    content: '';
+    position: absolute;
+    top: .5rem;
+    left: .25rem;
+    right: .25rem;
+    bottom: .5rem;
+    z-index: 2;
+    border-radius: .5rem;
+}
+body .board button.wE>b{
+    border-left: 5px solid ;
+}
+body .board button.wW>b{
+    border-right: 5px solid red;
+}
+body .board button>b::after,
+body .board button>b::before{
+    transform: rotate(30deg);
+    top: -.4rem;
+    bottom: -.4rem;
+    left: .25rem;
+    right: .25rem;
+}
+body .board button>b::after{
+    transform: rotate(-30deg);
+    
+    
+}
+body .board button.wNW>b::after{
+    border-top: 5px solid green ;
+}
+body .board button.wSE>b::after{
+    border-bottom: 5px solid violet ;
+}
+body .board button.wNE>b::before{
+    border-top: 5px solid purple;
+}
+body .board button.wSW>b::before{
+    border-bottom: 5px solid orange;
+}
 
 
 html body .board > * {

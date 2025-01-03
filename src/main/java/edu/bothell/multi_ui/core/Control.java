@@ -1,5 +1,7 @@
 package edu.bothell.multi_ui.core;
 
+import java.util.Arrays;
+
 import org.springframework.stereotype.Service;
 
 import edu.bothell.multi_ui.ui.UI;
@@ -66,23 +68,48 @@ public class Control {
     }
 
     public String[][] getTerrainStrings() {
-        // TODO Auto-generated method stub
+
         Location ls[][] = ((World)g.getState()).getMap();
 
         String[][] ts = new String[ls.length][];
         for(int y = 0; y < ls.length; y++){
             ts[y] = new String[ls[y].length];
             for(int x = 0; x < ls[y].length; x++){
-                ts[y][x] = ls[y][x].getTerrainString();
+                ts[y][x] = ls[y][x].getTerrainString() + " ";
+                
+                for(int w = 0; w < ls[y][x].getWalls().length; w++){
+                    ts[y][x] += ( ls[y][x].getWalls()[w] == null )? 
+                        "" : " w" + Directions.values()[w];
+                } /**/
             }
         }
-
+        
         return ts;
     }
 
     public String checkConnected(int x, int y) {
         return "" + getLocation(x, y).getMatchTerrain(null);
         //throw new UnsupportedOperationException("Unimplemented method 'checkConnected'");
+    }
+
+    public String[][] getWallsStrings() {
+        Location ls[][] = ((World)g.getState()).getMap();
+        String[][] ws = new String[ls.length][];
+
+        for(int y = 0; y < ls.length; y++){
+            ws[y] = new String[ls[y].length];
+            for(int x = 0; x < ls[y].length; x++){
+                for(int w = 0; w < ls[y][x].getWalls().length; w++){
+                    ws[y][x] = " " + ( (Directions.values()[w] == null)? "": Directions.values()[w] );
+                }
+            }
+        }
+
+        return ws;
+    }
+
+    private String[][] stateToString(){
+        return new String[2][];
     }
 
 }

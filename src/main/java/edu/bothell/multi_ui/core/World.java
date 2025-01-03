@@ -47,7 +47,7 @@ public class World extends State {
         terriformer.treverse(
             location,
             die, 
-            (l, d) -> l.getTerrain() == null && l.getAdjacents() != null,
+            (l, d) -> (l.getTerrain() == null )&& l.getAdjacents() != null,
             (l, d) -> l.setTerrain(Crawler.bestFit(l, d))
         );
       

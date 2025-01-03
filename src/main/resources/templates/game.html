@@ -24,12 +24,13 @@
             
             <div class="row" th:each = "row, y : ${s}">
                 <button th:each = "cell, x : ${row}"
-                    th:class="${'c'+ cell + ' ' + t[0][0]}"
+                    th:class="${'c'+ cell + ' ' + t[y.index][x.index]}"
                     th:value="${x.index + ',' + y.index}" 
                     th:disabled="${cell + '' != ' '  }"
                     name="pos"
                     type="submit"
                 >
+                <b></b>
                 <i>[[${cell}]]</i>
             </button>
             </div>

@@ -51,7 +51,11 @@ public class SocketHandle extends TextWebSocketHandler {
     // METHODS --------------------------------------------------------------------
     private void broadcastGameState() throws IOException{
         // Create the shared state object from the game logic
-        Transit sharedState = new Transit(c.getState().getIt(), c.getActive().getChar(), c.getTerrainStrings());        
+        Transit sharedState = new Transit(
+            c.getState().getIt(), 
+            c.getActive().getChar(), 
+            c.getTerrainStrings()
+        );        
 
         // Convert the shared state to JSON
         String sJson = new ObjectMapper().writeValueAsString(sharedState);

@@ -32,7 +32,7 @@ const redrawBoard = function(d,t){
         for(let x = 0; x < row.length; x++ ){
             row[x].querySelector("i").textContent = d[y][x];
             row[x].className = "c" + d[y][x];
-            row[x].classList.add(t[y][x]);
+            row[x].className += t[y][x];
         }
     }
 }

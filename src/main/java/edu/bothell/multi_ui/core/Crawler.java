@@ -48,7 +48,6 @@ public class Crawler {
         }
       
         l.markWalled();
-        System.out.println( l );
         return l.getWalls(); 
     }
     
@@ -68,7 +67,7 @@ public class Crawler {
             addOddsAndCheckConnections(changingPrefrences, nei);
         
         // Step 3: Role the die and get the terrain
-        return useOddsAndRollDie(changingPrefrences, die);
+        return useOddsAndRollDie(changingPrefrences, die, l);
     }
 
     private static boolean addOddsAndCheckConnections(HashMap<Terrain, Integer> oddsTable, Location neighbor ){
@@ -97,11 +96,13 @@ public class Crawler {
         return true;
     }
 
-    private static Terrain useOddsAndRollDie(HashMap<Terrain, Integer> oddsTable, Random die){
+    private static Terrain useOddsAndRollDie(HashMap<Terrain, Integer> oddsTable, Random die, Location l){
         // sum the table
+        System.out.println(l);
         int totalWeight = oddsTable.values().stream().mapToInt(Integer::intValue).sum();
+     
+        if(totalWeight<1)return Terrain.WATER;
 
-        if(totalWeight<1) return Terrain.BRICK;
         // Roll the die
         int roll = die.nextInt(totalWeight);
         for (Map.Entry<Terrain, Integer> entry : oddsTable.entrySet()) {
@@ -109,9 +110,14 @@ public class Crawler {
             if (roll < 0)   return entry.getKey();
             
         }
-        // Return BRICK if no match
+        System.out.println();
+        System.out.println("brick for roll:" + roll);
+        System.out.println(oddsTable);
+        System.out.println(totalWeight);
+        System.out.println();
         return Terrain.BRICK;
     }
+
 
     public static ArrayList<Location> getConnected(Location l, ArrayList<Location> ls){
         if(ls == null)  ls = new ArrayList<>();
