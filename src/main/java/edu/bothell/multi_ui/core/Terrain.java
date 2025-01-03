@@ -8,9 +8,9 @@ public enum Terrain {
     FOREST  (2,5,1,12,'㭑'),
     MOUNTAIN(2,5,3,3, '⛰'),
     CAVE    (3,5,1,6,'☶'),
-    CITY    (3,5,2,2, '㑞'),
+    CITY    (3,5,2,5, '㑞'),
     SWAMP   (0,5,2,7, 'w'),
-    WATER   (3,5,2,2,'~'),
+    WATER   (3,5,2,99,'~'),
     BRICK   (0,0,0,1, 'X');
 
     private int wallsMin;
@@ -37,6 +37,7 @@ public enum Terrain {
     private Terrain(int wallsMin, int wallsMax, int visibility, int maxConnect, char symbol){
         this.wallsMin = wallsMin;
         this.wallsMax = wallsMax;
+        this.maxConnect = maxConnect;
         this.visibility = visibility;
         this.symbol = symbol;
     }

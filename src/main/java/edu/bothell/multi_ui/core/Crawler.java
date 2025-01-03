@@ -1,14 +1,20 @@
 package edu.bothell.multi_ui.core;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Stack;
+import java.util.function.BiConsumer;
+import java.util.function.BiPredicate;
 
 public class Crawler {
     // PROPERTIES ---------------------------------------------------------------------
     private final World w;
     private final Stack<Location> stack;
+    private final Stack<Location> progress;
     private int startX;
     private int startY;
 
@@ -16,93 +22,146 @@ public class Crawler {
     public Crawler(World w){
         this.w = w;
         this.stack = new Stack<>();
+        this.progress = new Stack<>();
     }
 
     // STATIC UTILITIES ---------------------------------------------------------------
+    public static Wall[] buildWalls(Location l, Random die){
+        ArrayList<Directions> edges = new ArrayList<>(Arrays.asList(Directions.values()));
+        ArrayList<Directions> openings = new ArrayList<>();
+        for(Directions d : edges) if(!l.hasWall(d)) openings.add(d);
+        
+        //Add minimum walls
+        int min = (l.getTerrain() != null)? l.getTerrain().getWallsMin() : 3;
+        for(int i = 0; i < min - l.getWallCount(); i++ ){
+            int roll = die.nextInt(openings.size());
+            l.addWall( openings.get(roll) );
+            openings.remove(roll);
+        }
+
+        //Roll for maximum walls
+        int range = (int) Math.pow(2, openings.size() );
+        int roll = die.nextInt(range);
+        
+        for(int i = 0; i < openings.size(); i++){
+            if ((roll & (1 << i)) != 0) l.addWall(openings.get(i));
+        }
+      
+        l.markWalled();
+        System.out.println( l );
+        return l.getWalls(); 
+    }
+    
     public static Terrain bestFit(Location l, Random die){
+
         // Step 0: If the location already has a terrain, return it
-        // We are getting the terrain FOR location L!!!!
-        if(l.getTerrain() != null) return l.getTerrain();
+        if(l.getTerrain() != null || l.getAdjacents() == null) return l.getTerrain();
 
-        // Step 1: Collect placeholders for neighbor terrains prefs
-        int[] totalPrefs = new int[Terrain.values().length];
-        boolean hasNeiTerrain = false;      // book-keeping
-
-        // Step 3: Iterate through all Neighbords to sum preferences
-        for(Location nei: l.getAdjacents()){
-            Terrain t = nei.getTerrain();   // Fetch terrain of the neighbor
-            if(t == null) continue;         // Skip this if this neighbor location isn't set
-            else hasNeiTerrain = true;      // If it is, don't worry about this check again.
-            
-            int[] nPrefs = t.getPreference();
-            for(int i=0; i<totalPrefs.length; i++){
-                // TODO: Need to add check for max connected.
-                totalPrefs[i] += nPrefs[i];
-            } 
+        // Step 1: create dictionary of preferences so as to remove by name
+        HashMap<Terrain, Integer> changingPrefrences = new HashMap<>();
+        for (Terrain terrain : Terrain.values()) {
+            changingPrefrences.put(terrain, 0); // Add each Terrain with a default value of 0
         }
 
-        // Step 4: (sideeffect) If there are no locations exit poorly
-        if (!hasNeiTerrain)  
-            throw new IllegalStateException("No adjacent locations have defined terrains.");
+        // Step 2: Iterate through all Neighbords to sum preferences
+        for( Location nei: l.getAdjacents() ) 
+            addOddsAndCheckConnections(changingPrefrences, nei);
         
-        // Step 5: Calculate total weight
-        int totalWeight = 0;
-        for (int weight : totalPrefs) totalWeight += weight;
+        // Step 3: Role the die and get the terrain
+        return useOddsAndRollDie(changingPrefrences, die);
+    }
+
+    private static boolean addOddsAndCheckConnections(HashMap<Terrain, Integer> oddsTable, Location neighbor ){
+        Terrain t = neighbor.getTerrain();
+        if(t == null) return false;
+
+        // Check max connect information and edit table as needed
+        int alreadyConnected = getConnected(neighbor, null).size();
+        if( alreadyConnected >= t.getMaxConnect() ){
+            oddsTable.remove(t);
+            return false;
+        }
         
-        // Step 6: Load the dice and roll!
+        // or if terrain is possible, loop remaining terrains to get odds
+        int[] nPrefs = t.getPreference();
+        
+        List<Terrain> ts = new ArrayList<>(oddsTable.keySet());
+        for( Terrain eachPossible : ts){
+            oddsTable.put(
+                eachPossible, 
+                oddsTable.getOrDefault(eachPossible, 0) 
+                + nPrefs[eachPossible.ordinal()]
+            );
+        }
+
+        return true;
+    }
+
+    private static Terrain useOddsAndRollDie(HashMap<Terrain, Integer> oddsTable, Random die){
+        // sum the table
+        int totalWeight = oddsTable.values().stream().mapToInt(Integer::intValue).sum();
+
+        if(totalWeight<1) return Terrain.BRICK;
+        // Roll the die
         int roll = die.nextInt(totalWeight);
-        Terrain[] terrains = Terrain.values();
-        for (int i = 0; i < terrains.length; i++) {
-            roll -= totalPrefs[i];
-            if (roll < 0)               return terrains[i];
+        for (Map.Entry<Terrain, Integer> entry : oddsTable.entrySet()) {
+            roll -= entry.getValue();
+            if (roll < 0)   return entry.getKey();
+            
         }
-
+        // Return BRICK if no match
         return Terrain.BRICK;
     }
 
-    // METHODS -----------------------------------------------------------------------
-    public void walls(int startX, int startY, Random die){
-        Location start = w.getLocation(startX, startY);
-        if (start == null) {
-            throw new IllegalStateException("Starting location not found at (" + startX + ", " + startY + ").");
-        }
+    public static ArrayList<Location> getConnected(Location l, ArrayList<Location> ls){
+        if(ls == null)  ls = new ArrayList<>();
+        if(ls.contains(l)) return ls;
 
+        ls.add(l);
+        Terrain t = l.getTerrain();
+        
+        for(Location nei: l.getAdjacents()){ 
+            if(nei.getTerrain() != null && nei.getTerrain().equals(t)){
+                getConnected(nei, ls);
+            } 
+        }
+        return ls;
+
+    }
+
+    // METHODS -----------------------------------------------------------------------
+
+    public void treverse(
+        int startX,
+        int startY,
+        Random die,
+        BiPredicate<Location, Random> filter,
+        BiConsumer <Location, Random> action
+    ){
+        treverse(w.getLocation(startX, startY), die, filter, action);
+    }
+
+    public void treverse(
+        Location start,
+        Random die,
+        BiPredicate <Location, Random> filter,
+        BiConsumer <Location, Random> action
+    ){
+        if(start == null) throw new IllegalStateException("Starting location not found at (" + startX + ", " + startY + ").");
 
         stack.push(start);
 
-        while( !stack.isEmpty() ){
+        System.out.println("start Treverse: " + start);
+        if( filter.test(start, die) ) action.accept(start, die);
+        while(!stack.isEmpty()){
             Location l = stack.pop();
-            for(Location nei : l.getAdjacents() ){
-                if(nei.getTerrain() == null){
-         
+            for ( Location nei : l.getAdjacents() ) {
+                if( filter.test(nei, die) ){
+                    action.accept(nei, die);
                     stack.push(nei);
                 }
             }
         }
-    }
-
-    public void terrain(int startX, int startY, Terrain startT, Random die ){
-        Location start = w.getLocation(startX, startY); 
-        if (start == null) {
-            throw new IllegalStateException("Starting location not found at (" + startX + ", " + startY + ").");
-        }
-
-        // Set the initial terrain
-        start.setTerrain(startT);
-        stack.push(start);
-
-        while( !stack.isEmpty() ){
-            Location l = stack.pop();
-            for(Location nei : l.getAdjacents() ){
-                System.out.println(nei);
-                
-                if(nei.getTerrain() == null){
-                    Terrain neiTerrain = bestFit(nei,die);
-                    nei.setTerrain(neiTerrain);
-                    stack.push(nei);
-                }/* */
-            }
-        }        
     }
 
 }

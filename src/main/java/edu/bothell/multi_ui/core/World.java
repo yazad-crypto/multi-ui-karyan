@@ -8,7 +8,6 @@ public class World extends State {
     // PROPERTIES ----------------------------------------------------------------
     private final char[][] S = super.getIt();
     private Location[][] map; // Map array is y,x
-    private List<Location> all = new ArrayList<>();
     
     // CONSTRUCTOR ----------------------------------------------------------------
     public World(){
@@ -21,10 +20,6 @@ public class World extends State {
     // METHODS -------------------------------------------------------------------
     public void build() {
         Random die = new Random();
-        
-        
-
-        
 
         for (int y = 0; y < S.length; y++) {
             
@@ -37,18 +32,32 @@ public class World extends State {
                 // Step 2: Loop Directions and add them as adjacent
                 for(Directions d: Directions.values()){
                     Location nei = getNeighbor(map[y][x], d);
-                    System.out.println(nei);
                     map[y][x].addAdjacent(nei, d);
                     nei.addAdjacent(map[y][x], d.opposite()); // Ensure bidirectional linkage
                 }
-
                 
             }
         }
 
-        Crawler terriformer = new Crawler(this);
-        terriformer.terrain(0, 0, Terrain.CITY, die);
+        Location location = map[0][0];
+        location.setTerrain(Terrain.CITY);
 
+        Crawler terriformer = new Crawler(this);
+
+        terriformer.treverse(
+            location,
+            die, 
+            (l, d) -> l.getTerrain() == null && l.getAdjacents() != null,
+            (l, d) -> l.setTerrain(Crawler.bestFit(l, d))
+        );
+      
+        terriformer.treverse(
+            location,
+            die, 
+            (l, d) -> l.getTerrain() != null && !l.isWalled(),
+            (l, d) -> Crawler.buildWalls(l, d)
+            
+        ); 
     }
 
     public Location[][] getMap(){

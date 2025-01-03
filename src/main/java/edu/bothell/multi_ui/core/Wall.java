@@ -33,4 +33,9 @@ public class Wall extends Thing {
         }
         
     }
+
+    @Override
+    public String toString(){
+        return "#";
+    }
 }

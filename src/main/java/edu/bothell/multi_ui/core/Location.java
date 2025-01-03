@@ -1,6 +1,7 @@
 package edu.bothell.multi_ui.core;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +15,7 @@ public class Location {
     private final Location[] adjacents = new Location[EDGES]; // Adjacent locations
     private final Wall[] walls = new Wall[EDGES]; 
     private final List<Thing> occupants = new ArrayList<>(); // Objects in this location
+    private boolean isWalled = false;
     private Terrain t;
     private Locatable uiElem; // Link to GUI element (e.g., Swing or Web)
 
@@ -40,18 +42,29 @@ public class Location {
     }    
 
     // Walls
+    
     public void addWall (Directions d) {
-        if(walls[d.ordinal()] == null && getAdjacent(d) != null)
-            walls[d.ordinal()] = shareWall(d,getAdjacent(d));
+        if( hasWall(d) || getAdjacent(d).hasWall( d.opposite() ) ) return;
+
+        walls[d.ordinal()] = new Wall();
+        getAdjacent( d.opposite() ).shareWall(d, walls[d.ordinal()]);
+        
+        if(getWallCount() == EDGES) this.isWalled = true;
     }
     
-    private Wall shareWall(Directions d, Location l){
-        Wall w = new Wall();
-        w.setLocations( new Location[]{this,l} );
-        if(l != null) l.addWall(d.opposite());
-        return w;
+    private void shareWall(Directions d, Wall w){
+        if( hasWall(d) || t.getMaxConnect() >= getWallCount()) return;
+        walls[d.opposite().ordinal()] = w;
+        if(getWallCount() == EDGES) this.isWalled = true;
     }
 
+    public boolean isWalled(){
+        return isWalled;
+    }
+
+    public void markWalled(){
+        this.isWalled = true;
+    }
     public int getWallCount(){
         int count = 0;
         for(Wall w: walls) if(w!=null) count++;
@@ -81,8 +94,6 @@ public class Location {
     }
 
     public void addAdjacent(Location loc, Directions d) {
-        System.out.println("addAdjacent");
-        System.out.println(loc);
         if (loc != null && adjacents[d.ordinal()] == null) {
             adjacents[d.ordinal()] = loc;
         }
@@ -128,9 +139,10 @@ public class Location {
     // Utility Methods
     @Override
     public String toString() {
-        if(adjacents.length > 1 && t != null) return "" + t.getSymbol();
         return "L{" + x +
                 "," + y +
+                "," + Arrays.toString(walls) +
+                "," + t +
                 '}';
     }
 
@@ -154,55 +166,6 @@ public class Location {
     
         return visited;
     }   
-
-
-    public Terrain getBestTerrian(Random die) {
-
-        // Initialize the hashmap for terrain odds
-        Map<Terrain, Integer> weights = new HashMap<>();
-
-        // Step 2: Update weights based on adjacent terrains
-        for (Location adj : this.adjacents) {
-            Terrain at = adj.getTerrain();
-            if (at != null) {
-                for (Terrain t : Terrain.values()) {
-                    int preference = t.getPreference(at);
-                    weights.merge(t, preference, Integer::sum);
-                }
-            }
-            else
-                System.out.print(" [ "+ adj +" ] ");
-        }
-
-        // Step 5: Fallback case for debugging
-        if (weights.isEmpty()) {
-
-            return Terrain.CITY;
-        }
-
-        // Step 3: Remove over-connected terrains
-        if (getTerrain() != null && getTerrain().getMaxConnect() <= getMatchTerrain(null).size()) {
-            weights.remove(getTerrain());
-        }
-        
- 
-
-        int totalWeight = weights.values().stream().mapToInt(Integer::intValue).sum();
-        System.out.println(totalWeight);
-        if(totalWeight < 1) return Terrain.CITY;
-        int roll = die.nextInt(totalWeight);
-
-        System.out.println("Total weight: " + totalWeight + ", Random roll: " + roll );
-        
-        for (Map.Entry<Terrain, Integer> entry : weights.entrySet()) {
-            roll -= entry.getValue();
-            if (roll < 0) {
-                System.out.println("Selected terrain: " + entry.getKey());
-                return entry.getKey();
-            }
-        }
-        return Terrain.BRICK;
-    }
 
     public String getTerrainString(){
         return (t == null)? " ": t.name();
