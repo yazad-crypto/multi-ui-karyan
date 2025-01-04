@@ -11,7 +11,7 @@ public enum Terrain {
     CITY    (3,5,2,2, '㑞'),
     SWAMP   (0,5,2,20, 'w'),
     WATER   (3,5,2,200,'~'),
-    BRICK   (0,0,0,1, 'X');
+    BRICK   (2,5,0,1, 'X');
 
     private int wallsMin;
     private int wallsMax;

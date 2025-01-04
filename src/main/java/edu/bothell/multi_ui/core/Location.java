@@ -1,12 +1,7 @@
 package edu.bothell.multi_ui.core;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Random;
-
 import edu.bothell.multi_ui.ui.swing.Locatable;
 
 public class Location {
@@ -30,9 +25,6 @@ public class Location {
     }
 
     // METHODS ------------------------------------------------------------------
-
-    
-
     public void setTerrain(Terrain t) {
         this.t = t;
     }
@@ -45,17 +37,15 @@ public class Location {
     
     public void addWall (Directions d) {
         if( hasWall(d) || getAdjacent(d).hasWall( d.opposite() ) ) return;
-
         walls[d.ordinal()] = new Wall();
-        getAdjacent( d.opposite() ).shareWall(d, walls[d.ordinal()]);
+        getAdjacent( d ).shareWall(d, walls[d.ordinal()]);
         
-        if(getWallCount() == EDGES) this.isWalled = true;
+        if(getWallCount() == EDGES-1) this.isWalled = true;
     }
     
     private void shareWall(Directions d, Wall w){
-        if( hasWall(d) || t.getMaxConnect() >= getWallCount()) return;
         walls[d.opposite().ordinal()] = w;
-        if(getWallCount() == EDGES) this.isWalled = true;
+        if(getWallCount() == EDGES-1) this.isWalled = true;
     }
 
     public boolean isWalled(){
@@ -96,6 +86,8 @@ public class Location {
     public void addAdjacent(Location loc, Directions d) {
         if (loc != null && adjacents[d.ordinal()] == null) {
             adjacents[d.ordinal()] = loc;
+            walls[d.ordinal()] = new Wall();
+            loc.shareWall(d, walls[d.ordinal()]);
         }
     }
 

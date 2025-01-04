@@ -98,7 +98,6 @@ public class Crawler {
 
     private static Terrain useOddsAndRollDie(HashMap<Terrain, Integer> oddsTable, Random die, Location l){
         // sum the table
-        System.out.println(l);
         int totalWeight = oddsTable.values().stream().mapToInt(Integer::intValue).sum();
      
         if(totalWeight<1)return Terrain.WATER;

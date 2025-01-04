@@ -10,14 +10,25 @@ public enum Directions {
 
     private final int dx;
     private final int dy;
+    private boolean offset;
 
     Directions(int dx, int dy) {
         this.dx = dx;
         this.dy = dy;
     }
 
+    public Directions offset(boolean b){
+        this.offset = b;
+        return this;
+    }
+
+    public void shift(){
+        offset = true;
+    }
+
     public int dX() {
-        return dx;
+        if(name().equals("E") || name().equals("W") || !offset) return dx;
+        return dx + 1;
     }
 
     public int dY() {

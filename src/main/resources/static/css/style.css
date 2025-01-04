@@ -109,10 +109,15 @@ body button.DESERT{
     background-color: rgba(200,200,100);
     zbackground-image: url(/img/HILLS.webp);
 }
+body button.CITY{
+    background-color: white;
+}
 body button.BRICK{
-    background-color: red;
+    opacity: 1;
+    background-color: white;
     box-shadow: none !important;
 }
+
 body button{
     zbackground-color: transparent !important;
 
@@ -123,18 +128,18 @@ body .board button>b::before{
     display: block;
     content: '';
     position: absolute;
-    top: .5rem;
-    left: .25rem;
-    right: .25rem;
-    bottom: .5rem;
+    top: .6rem;
+    left: .3rem;
+    right: .3rem;
+    bottom: .6rem;
     z-index: 2;
-    border-radius: .5rem;
+    border-radius: .2rem;
 }
 body .board button.wE>b{
-    border-left: 5px solid ;
+    border-right: 5px solid ;
 }
 body .board button.wW>b{
-    border-right: 5px solid red;
+    border-left: 5px solid red;
 }
 body .board button>b::after,
 body .board button>b::before{
