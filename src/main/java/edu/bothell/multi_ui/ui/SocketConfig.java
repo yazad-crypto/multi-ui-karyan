@@ -19,6 +19,7 @@ public class SocketConfig implements WebSocketConfigurer {
     }
 
     // METHODS -----------------------------------------------------------------------
+    @SuppressWarnings("null")
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
         registry.addHandler(h, "/socket").setAllowedOrigins("*");   

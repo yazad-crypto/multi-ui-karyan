@@ -1,7 +1,5 @@
 package edu.bothell.multi_ui.core;
 
-import java.util.Arrays;
-
 import org.springframework.stereotype.Service;
 
 import edu.bothell.multi_ui.ui.UI;
@@ -106,10 +104,6 @@ public class Control {
         }
 
         return ws;
-    }
-
-    private String[][] stateToString(){
-        return new String[2][];
     }
 
 }
