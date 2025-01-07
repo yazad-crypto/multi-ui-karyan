@@ -2,25 +2,41 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 
-    <meta http-equiv="refresh" content="5">
-
+    <meta  th:if="${mode != 'socket'}" http-equiv="refresh" content="5">
+    <link href="/css/style.css" rel="stylesheet" />
 
 </head>
-<body>
-    <h1>GAME</h1>
-    <p>Your session ID: <span th:text="${sessionId}"></span></p>
-    <p><span th:text="${role}"></span></p>
+<body th:class="${'c'+role}">
+    <p>You are player <b th:class="${'c'+role}" th:text="${role}"></b></p>
+    <p th:if="${pc < 2}"><span>waiting for players...</span></p>
+    <p th:if="${pc > 1}">player <span id="p" th:class="${'c'+ ((turn % pc) + 1)}" th:text="${(turn % pc) + 1}"></span>'s turn</p>
     <form method="post" th:action="@{/update}">
-        
-        <div th:each = "row, y : ${s}">
-            <button th:each = "cell, x : ${row}"
-                th:text="${cell}"
-                th:value="${x.index + ',' + y.index}" 
-                th:disabled="${cell + '' != ' '  }"
-                name="pos"
+        <div class="dice">
+            <button class="die"
+                name="die"
+                th:value="${die}"
+                th:text="${die}"
                 type="submit"
-            ></button>
+                >0</button>
         </div>
+        <div class="board">
+            <div id="board">
+            
+            <div class="row" th:each = "row, y : ${s}">
+                <button th:each = "cell, x : ${row}"
+                    th:class="${'c'+ cell + ' ' + t[y.index][x.index]}"
+                    th:value="${x.index + ',' + y.index}" 
+                    th:disabled="${cell + '' != ' '  }"
+                    name="pos"
+                    type="submit"
+                >
+                <b></b>
+                <i>[[${cell}]]</i>
+            </button>
+            </div>
+            </div>
+        </div>    
     </form>
+    <script th:if="${mode == 'socket'}" src="/js/sockets.js"></script>
 </body>
 </html>
