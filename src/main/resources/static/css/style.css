@@ -63,58 +63,58 @@ body button{
     box-shadow: .25rem .25rem .25rem rgba(0,0,0,.5), inset .25rem .25rem .25rem rgba(0,0,0,.5);
 }
 body button.FOREST{
-    background-color:rgba(10,50,05);
-    zbackground-image: url(/img/FOREST.webp);
+    background-color:rgb(30, 255, 0);
+    background-image: url(/img/FOREST.webp);
 
 }
 body button.TREES{
-    background-color:rgba(20,100,15);
-    zbackground-image: url(/img/TREES.webp);
+    background-color:rgb(255, 0, 204);
+    background-image: url(/img/TREE.jpg);
 
 }
 body button.CITY{
-    background-color:rgba(100,100,100);
-    xbackground-image: url(/img/CITY.webp);
+    background-color:rgb(175, 0, 0);
+    background-image: url(/img/CITY.webp);
     background-size: 180%;
     background-position: center 60%;
 
 }
 body button.CAVE{
-    background-color:rgba(50,50,50);
-    zbackground-image: url(/img/CAVE.webp);
+    background-color:rgb(170, 0, 255);
+    background-image: url(/img/CAVE.webp);
 }
 body button.MOUNTAIN{
-    background-color:rgba(180,175,190);
-    zbackground-image: url(/img/MOUNTAIN.webp);
+    background-color:rgb(0, 64, 227);
+    background-image: url(/img/MOUNTAIN.webp);
 }
 body button.WATER{
-    background-color: rgba(70,180,190);
+    background-color: rgb(255, 0, 174);
     background-color: none;
     box-shadow: none;
-    zbackground-image: url(/img/WATER.webp);
+    background-image: url(/img/WATERBETTER.jpg);
 }
 body button.SWAMP{
-    background-color: rgba(150,170,140);
-    zbackground-image: url(/img/SWAMP.webp);
+    background-color: rgb(204, 255, 0);
+    background-image: url(/img/SWAMP.webp);
 }
 body button.PLAIN{
-    background-color: rgba(170,200,100);
-    zbackground-image: url(/img/PLAIN.webp);
+    background-color: rgb(0, 31, 156);
+    background-image: url(/img/PLAIN.webp);
 }
 body button.HILLS{
-    background-color: rgba(100,200,100);
-    zbackground-image: url(/img/HILLS.webp);
+    background-color: rgb(105, 0, 0);
+    background-image: url(/img/HILLS.webp);
 }
 body button.DESERT{
-    background-color: rgba(200,200,100);
-    zbackground-image: url(/img/HILLS.webp);
+    background-color: rgb(0, 255, 251);
+    background-image: url(/img/HILLS.webp);
 }
 body button.CITY{
-    background-color: white;
+    background-color: rgb(0, 38, 104);
 }
 body button.BRICK{
     opacity: 1;
-    background-color: white;
+    background-color: rgb(25, 0, 255);
     box-shadow: none !important;
 }
 

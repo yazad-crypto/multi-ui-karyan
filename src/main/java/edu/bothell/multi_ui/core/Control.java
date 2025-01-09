@@ -74,7 +74,7 @@ public class Control {
             ts[y] = new String[ls[y].length];
             for(int x = 0; x < ls[y].length; x++){
                 ts[y][x] = ls[y][x].getTerrainString() + " ";
-                
+                    
                 for(int w = 0; w < ls[y][x].getWalls().length; w++){
                     ts[y][x] += ( ls[y][x].getWalls()[w] == null )? 
                         "" : " w" + Directions.values()[w];
