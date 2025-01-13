@@ -42,11 +42,28 @@ public class Game {
         return s.isOpen(pos) && active.getSId().equals(sId);
     }
 
+    public boolean checkWin(int[] pos){
+
+        boolean wowie = false;
+        for (int i = 0; i < 3; i++) {
+            if (this.s.getIt(i, i) != active.getChar()) {
+                System.out.println("not yet!!");
+                return false;
+                
+            }
+        }
+        System.out.println("yet!!!");
+        return true;
+    }
+
     public char play(int[] pos, String sId){
         if(!isValid(pos, sId)) return ' ';
         turn++;
         this.s.setIt(active.getChar(), pos[0], pos[1]);
         this.active = p.get( turn % p.size() );
+        checkWin(pos);
+
+        //System.out.println("ello" + checkWin(pos));
 
         return active.getChar();
     }
@@ -78,6 +95,4 @@ public class Game {
     public int getTurn(){
         return this.turn;
     }
-
-
 }
