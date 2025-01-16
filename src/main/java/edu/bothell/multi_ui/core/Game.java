@@ -9,11 +9,16 @@ public class Game {
     private final State                s;
     private int                        turn;
     private Player                     active;
+    private char[][]   funnyArry = {{' ', ' ', ' ', ' '}, 
+                                    {' ', ' ', ' ', ' '}, 
+                                    {' ', ' ', ' ', ' '}, 
+                                    {' ', ' ', ' ', ' '}};
 
     public Game(Control c){
         this.turn = 0;
         this.s = new World();
         this.p = new ArrayList<>();
+        //this.funnyArray = [['x'],['n']];
     }
     
     public Player addPlayer(Player p){
@@ -39,12 +44,15 @@ public class Game {
     
     public boolean isValid(int[] pos, String sId){
         System.out.println("isVAlid?"+s.getIt(pos)+"|" + sId+"|" + active.getSId()+"|");
+
+        if(pos[0] > 2 && pos[1] > 3) return false;
         return s.isOpen(pos) && active.getSId().equals(sId);
     }
 
     public boolean checkWin(int[] pos){
 
         boolean wowie = false;
+    
         for (int i = 0; i < 3; i++) {
             if (this.s.getIt(i, i) != active.getChar()) {
                 System.out.println("not yet!!");
@@ -52,7 +60,7 @@ public class Game {
                 
             }
         }
-        System.out.println("yet!!!");
+        System.out.println("yaaay its a thingy!!!");
         return true;
     }
 
@@ -62,6 +70,7 @@ public class Game {
         this.s.setIt(active.getChar(), pos[0], pos[1]);
         this.active = p.get( turn % p.size() );
         checkWin(pos);
+        //checkWin(pos);
 
         //System.out.println("ello" + checkWin(pos));
 

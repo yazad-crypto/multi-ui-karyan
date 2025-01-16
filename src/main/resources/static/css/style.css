@@ -4,7 +4,7 @@
     --p3-c:rgba(150,100,250,.75);       /*var(--p3-c) -> (150,100,250,.75)*/
 }
 
-body{text-align: center; margin:0; padding:0; position: relative; background:#987}
+body{text-align: center; margin:0; padding:0; position: relative; background:#987; background-image: url(/img/chess.jpg)}
 .board > *{
     display: inline-block;
     margin: auto;
@@ -54,7 +54,7 @@ body.c3 button:hover:after{border-bottom-color:rgba(150,100,250,.5);}
 body button{
     height: 3rem;
     width:3rem;
-    border-radius: 50%;
+    border-radius: 100%;
     margin:-.4rem -.2rem;
     opacity: .75;
     background-color: #ba9;
@@ -62,6 +62,7 @@ body button{
     background-position: bottom;
     box-shadow: .25rem .25rem .25rem rgba(0,0,0,.5), inset .25rem .25rem .25rem rgba(0,0,0,.5);
 }
+
 body button.FOREST{
     background-color:rgb(30, 255, 0);
     background-image: url(/img/FOREST.webp);
@@ -118,6 +119,52 @@ body button.BRICK{
     box-shadow: none !important;
 }
 
+
+/*
+body button.FOREST{
+    background-color:rgb(30, 255, 0);
+}
+body button.TREES{
+    background-color:rgb(255, 0, 204);
+}
+body button.CITY{
+    background-color:rgb(175, 0, 0);
+    background-size: 180%;
+    background-position: center 60%;
+}
+body button.CAVE{
+    background-color:rgb(170, 0, 255);
+}
+body button.MOUNTAIN{
+    background-color:rgb(0, 64, 227);
+}
+body button.WATER{
+    background-color: rgb(255, 0, 174);
+    background-color: none;
+    box-shadow: none;
+}
+body button.SWAMP{
+    background-color: rgb(204, 255, 0);
+}
+body button.PLAIN{
+    background-color: rgb(0, 31, 156);
+}
+body button.HILLS{
+    background-color: rgb(105, 0, 0);
+}
+body button.DESERT{
+    background-color: rgb(0, 255, 251);
+}
+body button.CITY{
+    background-color: rgb(0, 38, 104);
+}
+body button.BRICK{
+    opacity: 1;
+    background-color: rgb(25, 0, 255);
+    box-shadow: none !important;
+}
+*/
+
 body button{
     zbackground-color: transparent !important;
 
@@ -135,12 +182,6 @@ body .board button>b::before{
     z-index: 2;
     border-radius: .2rem;
 }
-body .board button.wE>b{
-    border-right: 5px solid ;
-}
-body .board button.wW>b{
-    border-left: 5px solid red;
-}
 body .board button>b::after,
 body .board button>b::before{
     transform: rotate(30deg);
@@ -153,9 +194,18 @@ body .board button>b::after{
     transform: rotate(-30deg);
     
     
+    
+}
+
+/*
+body .board button.wE>b{
+    border-right: 5px solid ; 
+}
+body .board button.wW>b{
+    border-left: 5px solid red;
 }
 body .board button.wNW>b::after{
-    border-top: 5px solid green ;
+    border-top: 5px solid green ; 
 }
 body .board button.wSE>b::after{
     border-bottom: 5px solid violet ;
@@ -166,11 +216,16 @@ body .board button.wNE>b::before{
 body .board button.wSW>b::before{
     border-bottom: 5px solid orange;
 }
+*/
+
+
 
 
 html body .board > * {
     transform: none;  zperspective(30rem) rotateX(20deg) translateZ(5rem) translateX(-.5rem);
 }
+
+
 html body .board > * > * { white-space: nowrap;}
 body div button::before,
 body div button::after {border:none;}

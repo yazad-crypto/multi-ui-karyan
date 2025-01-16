@@ -1,9 +1,8 @@
 package edu.bothell.multi_ui.core;
 
-import java.util.Arrays;
-
 public class State implements Statable<int[]> {
-    public final char[][]   S = new char[4][4];
+    //public final char[][]   S = new char[4][4];   
+    public final char[][]   S = {{' ', ' ', ' ', ' '}, {' ', ' ', ' ', ' '}, {' ', ' ', ' ', ' '}, {' ', ' ', ' ', ' '}};
 
     public State(){
         System.out.println("CREATING THE STATE...");
@@ -17,7 +16,13 @@ public class State implements Statable<int[]> {
 
     public void setIt(char it, int x, int y){
         this.S[y][x] = it;
-        System.out.println(Arrays.deepToString(S));
+        for(int i = 0; i < S.length; i++){
+            for (int o = 0; o < S[i].length; o++) {
+                System.out.print("[" + S[i][o] + "]");
+            }
+            System.out.println();
+        }
+        //System.out.println(Arrays.deepToString(S));
     } 
 
     public char getIt(int x, int y){
